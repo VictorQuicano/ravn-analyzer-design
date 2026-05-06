@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer/src/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer/src/app/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/ravn-labs-saas-ripper-2/agent-os/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/ravn-labs-saas-ripper-2/documentation/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/ravn-labs-saas-ripper-2/apps/**)",
+      "Write(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer-design/product/**)",
+      "Write(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer-design/src/**)",
+      "Edit(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer-design/product/**)",
+      "Edit(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer-design/src/**)",
+      "Bash(mkdir:*)",
+      "Bash(touch:*)",
+      "Bash(grep -v \"^auth$\\\\|^insights\\\\|^comments\\\\|^company\")",
+      "mcp__forge__delegate_task",
+      "mcp__forge__list_terminals",
+      "mcp__forge__read_screen",
+      "mcp__forge__read_terminal",
+      "mcp__forge__health_check"
+    ]
+  }
+}

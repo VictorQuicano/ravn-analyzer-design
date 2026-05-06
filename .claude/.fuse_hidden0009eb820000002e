@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer/src/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer/src/app/**)"
+    ]
+  }
+}

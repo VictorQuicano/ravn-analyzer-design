@@ -1,0 +1,575 @@
+{
+  "_meta": {
+    "models": {
+      "project": "The active prospect project — company name, intake source, and rep ownership. Drives the project context strip at the top of the screen.",
+      "stats": "The four headline KPI tiles directly under the topnav — apps captured, annual spend, average utilization, and the next renewal in days.",
+      "apps": "Each app is a SaasApplication captured for this project — vendor, contract terms, utilization, AI-extraction state, and a pre-populated feature checklist with per-prospect in-use toggles. Drives the SaaS card grid.",
+      "extractionQueue": "Pending or in-flight AI extractions across the portfolio — shown in the thin queue strip above the card grid. Hidden when empty.",
+      "brandedIntakeUrl": "The public, brand-themed intake URL the rep can copy or send to the prospect's finance contact."
+    },
+    "relationships": [
+      "Each App belongs to one Project (the project context strip).",
+      "Each App has one Contract (annual cost, billing cadence, end date, custom terms) and optionally one Contract Document (uploaded PDF).",
+      "Each App carries a list of CatalogFeatures (label + per-prospect in-use boolean) — pre-populated from the SaaS Catalog when the app was added.",
+      "ExtractionQueue items reference an App by saasId and surface AI-extraction status outside the card grid for fast triage.",
+      "Stats are rolled up across all Apps in the Project (count, total spend, average utilization, soonest renewal)."
+    ]
+  },
+  "project": {
+    "id": "proj-northwind",
+    "company": "Northwind Logistics",
+    "logoUrl": null,
+    "industry": "Supply Chain & Logistics",
+    "intakeSource": "rep-guided",
+    "ownerName": "Priya Shah",
+    "ownerInitials": "PS"
+  },
+  "brandedIntakeUrl": "https://analyze.ravn.co/intake/northwind-logistics-2026",
+  "stats": [
+    {
+      "id": "apps-captured",
+      "label": "Apps captured",
+      "value": 14,
+      "format": "number",
+      "sublabel": "11 with contracts on file"
+    },
+    {
+      "id": "annual-spend",
+      "label": "Annual SaaS spend",
+      "value": 1842500,
+      "format": "currency",
+      "sublabel": "Across active + renewing"
+    },
+    {
+      "id": "avg-utilization",
+      "label": "Avg seat utilization",
+      "value": 0.43,
+      "format": "percent",
+      "sublabel": "57% of seats unused"
+    },
+    {
+      "id": "next-renewal",
+      "label": "Next renewal",
+      "value": 18,
+      "format": "duration-days",
+      "sublabel": "HubSpot · $148K"
+    }
+  ],
+  "extractionQueue": [
+    {
+      "saasId": "saas-hubspot",
+      "saasName": "HubSpot",
+      "status": "ready-for-review",
+      "queuedAt": "2026-05-05T16:40:00Z"
+    },
+    {
+      "saasId": "saas-asana",
+      "saasName": "Asana",
+      "status": "extracting",
+      "queuedAt": "2026-05-06T08:12:00Z"
+    },
+    {
+      "saasId": "saas-zendesk",
+      "saasName": "Zendesk",
+      "status": "failed",
+      "queuedAt": "2026-05-04T11:02:00Z"
+    }
+  ],
+  "apps": [
+    {
+      "id": "saas-salesforce",
+      "name": "Salesforce",
+      "vendorName": "Salesforce, Inc.",
+      "websiteUrl": "https://salesforce.com",
+      "logoUrl": null,
+      "category": "sales",
+      "departments": ["Sales", "Customer Success", "RevOps"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 612000,
+        "licenseCount": 220,
+        "billingCadence": "annual",
+        "contractEndDate": "2027-02-15",
+        "daysUntilRenewal": 285,
+        "autoRenew": true,
+        "customTerms": "Volume discount renegotiated mid-2025; auto-renew with 90-day cancel window."
+      },
+      "utilization": 0.38,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "lead-capture", "label": "Lead capture", "inUse": true },
+        { "id": "opp-mgmt", "label": "Opportunity management", "inUse": true },
+        { "id": "workflow-automation", "label": "Workflow automation", "inUse": true },
+        { "id": "reporting-dashboards", "label": "Reporting & dashboards", "inUse": true },
+        { "id": "forecasting", "label": "AI forecasting (Einstein)", "inUse": false },
+        { "id": "mobile-app", "label": "Mobile app", "inUse": false },
+        { "id": "marketing-cloud", "label": "Marketing Cloud add-on", "inUse": false },
+        { "id": "cpq", "label": "CPQ / quoting", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Salesforce-MSA-2026-Northwind.pdf",
+        "uploadedAt": "2026-04-12T14:23:00Z",
+        "sizeLabel": "1.4 MB",
+        "pageCount": 42
+      },
+      "addedAt": "2026-04-02T09:15:00Z",
+      "notes": "Rep flagged: 84 of 220 seats inactive in last 60 days — strong rip candidate, but board-level relationship with Salesforce account team. Tread carefully."
+    },
+    {
+      "id": "saas-hubspot",
+      "name": "HubSpot",
+      "vendorName": "HubSpot, Inc.",
+      "websiteUrl": "https://hubspot.com",
+      "logoUrl": null,
+      "category": "marketing",
+      "departments": ["Marketing", "Sales Ops"],
+      "contractStatus": "renewing",
+      "contract": {
+        "annualCost": 148000,
+        "licenseCount": 35,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-05-24",
+        "daysUntilRenewal": 18,
+        "autoRenew": false,
+        "customTerms": "Marketing Hub Enterprise + Sales Hub Pro bundle; 12% uplift on quote."
+      },
+      "utilization": 0.71,
+      "ripReadiness": "ready",
+      "aiExtraction": "ready-for-review",
+      "features": [
+        { "id": "email-campaigns", "label": "Email campaigns", "inUse": true },
+        { "id": "landing-pages", "label": "Landing pages", "inUse": true },
+        { "id": "marketing-automation", "label": "Marketing automation", "inUse": true },
+        { "id": "ab-testing", "label": "A/B testing", "inUse": false },
+        { "id": "ads-mgmt", "label": "Ad campaign management", "inUse": false },
+        { "id": "smart-content", "label": "Smart content / personalization", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "HubSpot-Renewal-Quote-FY26.pdf",
+        "uploadedAt": "2026-05-05T11:08:00Z",
+        "sizeLabel": "812 KB",
+        "pageCount": 14
+      },
+      "addedAt": "2026-04-04T10:32:00Z",
+      "notes": "Renewal quote includes 12% uplift — this is the stake-in-the-ground moment for a build pitch."
+    },
+    {
+      "id": "saas-notion",
+      "name": "Notion",
+      "vendorName": "Notion Labs, Inc.",
+      "websiteUrl": "https://notion.so",
+      "logoUrl": null,
+      "category": "productivity",
+      "departments": ["All hands"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 84600,
+        "licenseCount": 940,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-09-30",
+        "daysUntilRenewal": 147,
+        "autoRenew": true,
+        "customTerms": "Enterprise plan with SAML SSO + audit log."
+      },
+      "utilization": 0.62,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "docs-wiki", "label": "Docs & wiki", "inUse": true },
+        { "id": "databases", "label": "Databases", "inUse": true },
+        { "id": "projects-tasks", "label": "Projects & tasks", "inUse": true },
+        { "id": "ai-writer", "label": "Notion AI", "inUse": true },
+        { "id": "forms", "label": "Forms", "inUse": false },
+        { "id": "calendar", "label": "Calendar", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Notion-Order-Form-2025.pdf",
+        "uploadedAt": "2026-04-07T16:50:00Z",
+        "sizeLabel": "342 KB",
+        "pageCount": 6
+      },
+      "addedAt": "2026-04-04T14:12:00Z"
+    },
+    {
+      "id": "saas-slack",
+      "name": "Slack",
+      "vendorName": "Slack Technologies (Salesforce)",
+      "websiteUrl": "https://slack.com",
+      "logoUrl": null,
+      "category": "productivity",
+      "departments": ["All hands"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 218400,
+        "licenseCount": 1040,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-11-15",
+        "daysUntilRenewal": 193,
+        "autoRenew": true,
+        "customTerms": "Enterprise Grid; cross-workspace search enabled."
+      },
+      "utilization": 0.81,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "channels", "label": "Channels & DMs", "inUse": true },
+        { "id": "huddles", "label": "Huddles & calls", "inUse": true },
+        { "id": "workflow-builder", "label": "Workflow Builder", "inUse": false },
+        { "id": "canvas", "label": "Canvas", "inUse": false },
+        { "id": "connect", "label": "Slack Connect (external partners)", "inUse": true },
+        { "id": "ai-recap", "label": "AI recaps", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Slack-Enterprise-Grid-Renewal.pdf",
+        "uploadedAt": "2026-04-09T09:00:00Z",
+        "sizeLabel": "1.1 MB",
+        "pageCount": 28
+      },
+      "addedAt": "2026-04-04T14:14:00Z"
+    },
+    {
+      "id": "saas-asana",
+      "name": "Asana",
+      "vendorName": "Asana, Inc.",
+      "websiteUrl": "https://asana.com",
+      "logoUrl": null,
+      "category": "productivity",
+      "departments": ["Operations", "Marketing", "Engineering"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 96720,
+        "licenseCount": 320,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-06-08",
+        "daysUntilRenewal": 33,
+        "autoRenew": false
+      },
+      "utilization": 0.29,
+      "ripReadiness": "needs-data",
+      "aiExtraction": "extracting",
+      "features": [
+        { "id": "projects", "label": "Projects & tasks", "inUse": true },
+        { "id": "timeline", "label": "Timeline (Gantt)", "inUse": false },
+        { "id": "portfolios", "label": "Portfolios", "inUse": false },
+        { "id": "goals", "label": "Goals", "inUse": false },
+        { "id": "workload", "label": "Workload", "inUse": false },
+        { "id": "automation-rules", "label": "Automation rules", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Asana-Order-Form-Q2-2025.pdf",
+        "uploadedAt": "2026-05-06T07:55:00Z",
+        "sizeLabel": "486 KB",
+        "pageCount": 9
+      },
+      "addedAt": "2026-04-09T11:05:00Z",
+      "notes": "Power-user interview revealed only ~30% of seats are checked into weekly. Likely overlap with Notion projects."
+    },
+    {
+      "id": "saas-zendesk",
+      "name": "Zendesk",
+      "vendorName": "Zendesk, Inc.",
+      "websiteUrl": "https://zendesk.com",
+      "logoUrl": null,
+      "category": "support",
+      "departments": ["Customer Support"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 132480,
+        "licenseCount": 92,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-08-22",
+        "daysUntilRenewal": 108,
+        "autoRenew": true
+      },
+      "utilization": 0.48,
+      "ripReadiness": "missing-contract",
+      "aiExtraction": "failed",
+      "features": [
+        { "id": "ticketing", "label": "Ticketing", "inUse": true },
+        { "id": "help-center", "label": "Help center / KB", "inUse": true },
+        { "id": "chat-messaging", "label": "Chat & messaging", "inUse": true },
+        { "id": "voice", "label": "Talk (voice)", "inUse": false },
+        { "id": "ai-agents", "label": "AI agents", "inUse": false },
+        { "id": "advanced-analytics", "label": "Explore advanced analytics", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Zendesk-Suite-Quote-scan.pdf",
+        "uploadedAt": "2026-05-04T11:00:00Z",
+        "sizeLabel": "5.8 MB",
+        "pageCount": 31
+      },
+      "addedAt": "2026-04-12T13:40:00Z",
+      "notes": "Uploaded scan was a poor-quality photo of the printout — extraction failed twice. Need a clean PDF from Procurement."
+    },
+    {
+      "id": "saas-zoom",
+      "name": "Zoom",
+      "vendorName": "Zoom Communications",
+      "websiteUrl": "https://zoom.us",
+      "logoUrl": null,
+      "category": "productivity",
+      "departments": ["All hands"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 78300,
+        "licenseCount": 870,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-12-31",
+        "daysUntilRenewal": 239,
+        "autoRenew": true
+      },
+      "utilization": 0.55,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "meetings", "label": "Meetings", "inUse": true },
+        { "id": "webinars", "label": "Webinars", "inUse": false },
+        { "id": "phone", "label": "Zoom Phone", "inUse": false },
+        { "id": "rooms", "label": "Zoom Rooms", "inUse": true },
+        { "id": "ai-companion", "label": "AI Companion summaries", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Zoom-FY26-Renewal.pdf",
+        "uploadedAt": "2026-04-15T10:18:00Z",
+        "sizeLabel": "624 KB",
+        "pageCount": 11
+      },
+      "addedAt": "2026-04-04T14:18:00Z"
+    },
+    {
+      "id": "saas-snowflake",
+      "name": "Snowflake",
+      "vendorName": "Snowflake Inc.",
+      "websiteUrl": "https://snowflake.com",
+      "logoUrl": null,
+      "category": "data",
+      "departments": ["Data Engineering", "Analytics"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 246000,
+        "licenseCount": 1,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-07-04",
+        "daysUntilRenewal": 59,
+        "autoRenew": false,
+        "customTerms": "Capacity contract — 6,000 credits/month minimum commit."
+      },
+      "utilization": 0.92,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "warehouse", "label": "Data warehouse", "inUse": true },
+        { "id": "snowpipe", "label": "Snowpipe streaming", "inUse": true },
+        { "id": "secure-data-sharing", "label": "Secure data sharing", "inUse": false },
+        { "id": "ml-functions", "label": "ML functions / Snowpark", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Snowflake-Capacity-Contract-2025.pdf",
+        "uploadedAt": "2026-04-18T13:00:00Z",
+        "sizeLabel": "2.2 MB",
+        "pageCount": 38
+      },
+      "addedAt": "2026-04-05T08:30:00Z"
+    },
+    {
+      "id": "saas-figma",
+      "name": "Figma",
+      "vendorName": "Figma, Inc.",
+      "websiteUrl": "https://figma.com",
+      "logoUrl": null,
+      "category": "design",
+      "departments": ["Design", "Product"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 38400,
+        "licenseCount": 64,
+        "billingCadence": "annual",
+        "contractEndDate": "2027-01-09",
+        "daysUntilRenewal": 248,
+        "autoRenew": true
+      },
+      "utilization": 0.74,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "design-files", "label": "Design files", "inUse": true },
+        { "id": "figjam", "label": "FigJam whiteboard", "inUse": true },
+        { "id": "dev-mode", "label": "Dev Mode", "inUse": false },
+        { "id": "variables", "label": "Variables / tokens", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Figma-Org-Plan-Renewal.pdf",
+        "uploadedAt": "2026-04-22T15:32:00Z",
+        "sizeLabel": "298 KB",
+        "pageCount": 5
+      },
+      "addedAt": "2026-04-05T08:34:00Z"
+    },
+    {
+      "id": "saas-greenhouse",
+      "name": "Greenhouse",
+      "vendorName": "Greenhouse Software",
+      "websiteUrl": "https://greenhouse.io",
+      "logoUrl": null,
+      "category": "hr",
+      "departments": ["People Ops"],
+      "contractStatus": "expired",
+      "contract": {
+        "annualCost": 54600,
+        "licenseCount": 28,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-04-30",
+        "daysUntilRenewal": -6,
+        "autoRenew": false,
+        "customTerms": "Month-to-month bridge after expiry while procurement reassesses."
+      },
+      "utilization": 0.18,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "ats", "label": "Applicant tracking", "inUse": true },
+        { "id": "interview-kits", "label": "Interview kits", "inUse": true },
+        { "id": "scorecards", "label": "Scorecards", "inUse": false },
+        { "id": "onboarding", "label": "Onboarding module", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Greenhouse-MSA-2024.pdf",
+        "uploadedAt": "2026-04-25T11:11:00Z",
+        "sizeLabel": "748 KB",
+        "pageCount": 19
+      },
+      "addedAt": "2026-04-08T14:00:00Z",
+      "notes": "Hiring froze in Q1; only 5 of 28 seats used in last 90 days. Expired April 30 — perfect timing for a build pitch."
+    },
+    {
+      "id": "saas-okta",
+      "name": "Okta",
+      "vendorName": "Okta, Inc.",
+      "websiteUrl": "https://okta.com",
+      "logoUrl": null,
+      "category": "security",
+      "departments": ["IT", "Security"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 92400,
+        "licenseCount": 1100,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-10-17",
+        "daysUntilRenewal": 164,
+        "autoRenew": true
+      },
+      "utilization": 0.96,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "sso", "label": "Single sign-on", "inUse": true },
+        { "id": "mfa", "label": "Adaptive MFA", "inUse": true },
+        { "id": "lifecycle-mgmt", "label": "Lifecycle management", "inUse": true },
+        { "id": "api-access", "label": "API access management", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Okta-Workforce-Identity-2025.pdf",
+        "uploadedAt": "2026-04-29T09:41:00Z",
+        "sizeLabel": "920 KB",
+        "pageCount": 22
+      },
+      "addedAt": "2026-04-09T09:11:00Z"
+    },
+    {
+      "id": "saas-mixpanel",
+      "name": "Mixpanel",
+      "vendorName": "Mixpanel, Inc.",
+      "websiteUrl": "https://mixpanel.com",
+      "logoUrl": null,
+      "category": "data",
+      "departments": ["Product Analytics"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 42000,
+        "licenseCount": 18,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-06-30",
+        "daysUntilRenewal": 55,
+        "autoRenew": false
+      },
+      "utilization": 0.34,
+      "ripReadiness": "needs-data",
+      "aiExtraction": "manual",
+      "features": [
+        { "id": "events", "label": "Event tracking", "inUse": true },
+        { "id": "funnels", "label": "Funnels", "inUse": true },
+        { "id": "retention", "label": "Retention reports", "inUse": false },
+        { "id": "experiments", "label": "Experiments / A-B", "inUse": false }
+      ],
+      "contractDocument": null,
+      "addedAt": "2026-04-15T10:50:00Z",
+      "notes": "Manual entry — finance contact promised PDF \"by end of next week.\""
+    },
+    {
+      "id": "saas-linear",
+      "name": "Linear",
+      "vendorName": "Linear Orbit, Inc.",
+      "websiteUrl": "https://linear.app",
+      "logoUrl": null,
+      "category": "dev",
+      "departments": ["Engineering", "Product"],
+      "contractStatus": "active",
+      "contract": {
+        "annualCost": 28800,
+        "licenseCount": 120,
+        "billingCadence": "annual",
+        "contractEndDate": "2026-09-04",
+        "daysUntilRenewal": 121,
+        "autoRenew": true
+      },
+      "utilization": 0.83,
+      "ripReadiness": "ready",
+      "aiExtraction": "confirmed",
+      "features": [
+        { "id": "issues", "label": "Issues & projects", "inUse": true },
+        { "id": "cycles", "label": "Cycles", "inUse": true },
+        { "id": "roadmap", "label": "Roadmap", "inUse": true },
+        { "id": "asks", "label": "Asks (intake)", "inUse": false }
+      ],
+      "contractDocument": {
+        "fileName": "Linear-Order-2025.pdf",
+        "uploadedAt": "2026-04-30T16:00:00Z",
+        "sizeLabel": "186 KB",
+        "pageCount": 4
+      },
+      "addedAt": "2026-04-19T13:25:00Z"
+    },
+    {
+      "id": "saas-stripe-billing",
+      "name": "Stripe Billing",
+      "vendorName": "Stripe, Inc.",
+      "websiteUrl": "https://stripe.com/billing",
+      "logoUrl": null,
+      "category": "finance",
+      "departments": ["Finance", "Engineering"],
+      "contractStatus": "draft",
+      "contract": {
+        "annualCost": 0,
+        "licenseCount": 0,
+        "billingCadence": "unknown",
+        "contractEndDate": "2026-12-31",
+        "daysUntilRenewal": 239,
+        "autoRenew": false,
+        "customTerms": "Variable — Stripe takes a percentage of processed volume; the rep is still mapping the cost line item."
+      },
+      "utilization": 0.5,
+      "ripReadiness": "missing-contract",
+      "aiExtraction": "not-started",
+      "features": [
+        { "id": "subscriptions", "label": "Subscriptions", "inUse": true },
+        { "id": "invoicing", "label": "Invoicing", "inUse": true },
+        { "id": "tax", "label": "Stripe Tax add-on", "inUse": false },
+        { "id": "revenue-recognition", "label": "Revenue recognition", "inUse": false }
+      ],
+      "contractDocument": null,
+      "addedAt": "2026-05-02T15:30:00Z",
+      "notes": "Added late — no contract on file yet. Needs the rep to track down the Stripe MSA from Northwind procurement."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer/src/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/analyzer/src/app/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/ravn-labs-saas-ripper-2/agent-os/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/ravn-labs-saas-ripper-2/documentation/**)",
+      "Read(//mnt/ssd/Trabajo/Ravn/ravn-enterprise-applications/apps/ravn-labs-saas-ripper-2/apps/**)",
+      "Bash(grep -v \"^auth$\\\\|^insights\\\\|^comments\\\\|^company\")",
+      "mcp__forge__delegate_task",
+      "mcp__forge__list_terminals"
+    ]
+  }
+}

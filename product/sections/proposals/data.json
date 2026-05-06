@@ -1,0 +1,487 @@
+{
+  "_meta": {
+    "models": {
+      "proposals": "A consultant-grade deliverable Ravn assembles for a single prospect — six narrative + financial sections plus engagement options, with web-share, PDF, and Slides export.",
+      "proposalListItem": "A compact summary of a proposal used in the project's proposal list rail.",
+      "recipients": "A person on the prospect side who has been granted access to the proposal share link; tracked individually for opens.",
+      "viewEvents": "Each recipient open of the proposal's web view, captured with timestamp, device, and dwell time. Drives the live activity feed and fires owner notifications.",
+      "engagementOptions": "The 2–3 tiered packages a recipient can choose from at acceptance time — name, monthly price, total contract value, scope bullets.",
+      "financialYears": "Year-by-year side-by-side comparison of current SaaS spend vs. Ravn-alternative investment, plus per-year and cumulative savings."
+    },
+    "relationships": [
+      "Each Proposal belongs to one Project and is owned by one Ravn user (ownerEmail).",
+      "Each Proposal has many Recipients — recipients live across multiple proposals only via separate records.",
+      "Each Proposal has many ViewEvents — each event references the recipient that triggered it (recipientId).",
+      "Each Proposal has many EngagementOptions; exactly one option is marked recommended.",
+      "Each Proposal carries a 5-year FinancialYears array used to render the comparison chart and savings KPIs.",
+      "The proposalListItem array mirrors the proposals collection — UI shows the rail from list items, then opens the matching full Proposal."
+    ]
+  },
+  "proposals": [
+    {
+      "id": "prop-001",
+      "title": "Northwind Airlines — SaaS Consolidation Proposal",
+      "prospectCompany": "Northwind Airlines",
+      "status": "viewed",
+      "version": "v3.2",
+      "totalOpens": 14,
+      "lastOpenedAt": "2026-05-06T13:42:00Z",
+      "engagementValue": 1480000,
+      "updatedAt": "2026-05-05T17:22:00Z"
+    },
+    {
+      "id": "prop-002",
+      "title": "Meridian Health — Devtools Replacement",
+      "prospectCompany": "Meridian Health",
+      "status": "sent",
+      "version": "v1.0",
+      "totalOpens": 3,
+      "lastOpenedAt": "2026-05-05T09:11:00Z",
+      "engagementValue": 920000,
+      "updatedAt": "2026-05-04T14:08:00Z"
+    },
+    {
+      "id": "prop-003",
+      "title": "Atlas Logistics — Fleet Ops Suite Replacement",
+      "prospectCompany": "Atlas Logistics",
+      "status": "ready",
+      "version": "v0.9",
+      "totalOpens": 0,
+      "lastOpenedAt": null,
+      "engagementValue": 1240000,
+      "updatedAt": "2026-05-03T10:45:00Z"
+    },
+    {
+      "id": "prop-004",
+      "title": "Lumen Capital — Internal Comms Stack",
+      "prospectCompany": "Lumen Capital",
+      "status": "draft",
+      "version": "v0.4",
+      "totalOpens": 0,
+      "lastOpenedAt": null,
+      "engagementValue": 680000,
+      "updatedAt": "2026-05-02T16:30:00Z"
+    },
+    {
+      "id": "prop-005",
+      "title": "Helio Foods — Field Service Replacement",
+      "prospectCompany": "Helio Foods",
+      "status": "accepted",
+      "version": "v2.1",
+      "totalOpens": 22,
+      "lastOpenedAt": "2026-04-28T20:15:00Z",
+      "engagementValue": 2150000,
+      "updatedAt": "2026-04-29T11:02:00Z"
+    },
+    {
+      "id": "prop-006",
+      "title": "Cobalt Energy — Compliance Workflows",
+      "prospectCompany": "Cobalt Energy",
+      "status": "archived",
+      "version": "v1.5",
+      "totalOpens": 7,
+      "lastOpenedAt": "2026-03-19T14:50:00Z",
+      "engagementValue": 540000,
+      "updatedAt": "2026-03-20T09:11:00Z"
+    }
+  ],
+  "activeProposal": {
+    "id": "prop-001",
+    "title": "Northwind Airlines — SaaS Consolidation Proposal",
+    "projectName": "Northwind Airlines",
+    "prospectCompany": "Northwind Airlines",
+    "status": "viewed",
+    "version": "v3.2",
+    "shareUrl": "https://share.ravn.co/p/nwa-2026-q2-7HxJ4Vk",
+    "pdfUrl": "https://files.ravn.co/proposals/prop-001/v3.2/northwind-proposal.pdf",
+    "slidesUrl": "https://docs.google.com/presentation/d/1Q9hNwa-V32-stub/edit",
+    "ownerName": "Mira Adesanya",
+    "ownerEmail": "mira@ravn.co",
+    "createdAt": "2026-04-12T15:00:00Z",
+    "updatedAt": "2026-05-05T17:22:00Z",
+    "totalOpens": 14,
+    "uniqueOpens": 5,
+    "lastOpenedAt": "2026-05-06T13:42:00Z",
+    "engagementValue": 1480000,
+    "recipients": [
+      {
+        "id": "rcp-001",
+        "name": "Daniel Okafor",
+        "email": "d.okafor@northwind.com",
+        "role": "VP Engineering",
+        "avatarColor": "lime",
+        "totalOpens": 6,
+        "lastOpenedAt": "2026-05-06T13:42:00Z"
+      },
+      {
+        "id": "rcp-002",
+        "name": "Sofía Gutiérrez",
+        "email": "sofia.g@northwind.com",
+        "role": "CFO",
+        "avatarColor": "amber",
+        "totalOpens": 4,
+        "lastOpenedAt": "2026-05-06T11:08:00Z"
+      },
+      {
+        "id": "rcp-003",
+        "name": "Kenji Watanabe",
+        "email": "k.watanabe@northwind.com",
+        "role": "Director, Procurement",
+        "avatarColor": "sky",
+        "totalOpens": 3,
+        "lastOpenedAt": "2026-05-05T17:03:00Z"
+      },
+      {
+        "id": "rcp-004",
+        "name": "Priya Raman",
+        "email": "p.raman@northwind.com",
+        "role": "Head of Ops",
+        "avatarColor": "rose",
+        "totalOpens": 1,
+        "lastOpenedAt": "2026-05-04T08:22:00Z"
+      }
+    ],
+    "sections": {
+      "cover": {
+        "state": "complete",
+        "prospectCompany": "Northwind Airlines",
+        "prospectLogoMark": "NW",
+        "preparedFor": "Daniel Okafor, VP Engineering",
+        "preparedBy": "Mira Adesanya, Ravn Partner",
+        "proposalDate": "May 6, 2026",
+        "tagline": "From a $4.2M SaaS sprawl to a single owned platform.",
+        "wordCount": 22
+      },
+      "executiveSummary": {
+        "state": "complete",
+        "headline": "Replace 11 fragmented SaaS tools with one custom platform Northwind owns.",
+        "subheadline": "Net-positive in 14 months, $9.6M cumulative savings over five years.",
+        "bullets": [
+          "Today: $4.2M annual run-rate across 11 tools, with 47% of seats unused and a redundancy rate of 38% across categories.",
+          "Tomorrow: a single Ravn-built platform — flight ops, crew comms, ground handling — designed in 18 weeks for the way Northwind actually operates.",
+          "Investment: $1.48M one-time build + $260K/yr managed maintenance. Cumulative 5-yr savings of $9.6M against the do-nothing baseline.",
+          "Risk: every section below has a paired mitigation. We co-own delivery and exit options stay symmetrical."
+        ],
+        "wordCount": 124
+      },
+      "currentState": {
+        "state": "complete",
+        "narrative": "Northwind's tooling has accreted around shifting org structures. Eleven tools share overlapping ownership across Ops, IT, and Crew Resourcing, and the cost ladder has climbed roughly 18% YoY for three years without a measurable change in adoption. Power-user interviews surfaced specific friction in three categories — fleet scheduling, crew briefing distribution, and ramp-handling intake — that drive the highest seat counts but the lowest weekly active rates.",
+        "points": [
+          {
+            "metric": "Annual SaaS spend",
+            "value": "$4,210,400",
+            "detail": "Across 11 tools, 2,640 licensed seats.",
+            "trend": "up"
+          },
+          {
+            "metric": "Seat utilization",
+            "value": "53%",
+            "detail": "47% of paid seats inactive 30+ days.",
+            "trend": "down"
+          },
+          {
+            "metric": "Redundancy rate",
+            "value": "38%",
+            "detail": "Overlapping features across 4 categories.",
+            "trend": "flat"
+          },
+          {
+            "metric": "User-pain index",
+            "value": "7.4 / 10",
+            "detail": "Aggregated from 142 power-user interviews.",
+            "trend": "up"
+          }
+        ],
+        "redundancyCallouts": [
+          "Crew comms split across Slack Enterprise + AeroBriefr + email (3 tools, 1 outcome).",
+          "Fleet scheduling duplicated between FlightStack and a homegrown sheet-based system.",
+          "Two CRMs — one for charter sales, one for cargo — that don't share a contact ID."
+        ],
+        "wordCount": 218
+      },
+      "ravnAlternative": {
+        "state": "complete",
+        "narrative": "The Ravn alternative is one purpose-built platform that compresses the 11 tools into a single application Northwind owns. We deliver in three phases — Discovery (3 weeks), Build (12 weeks), and Hardening (3 weeks) — with usable software at the end of every phase, not just the project. AI-assisted development lets us scope features at consultant timeframes that would have been impossible 24 months ago.",
+        "features": [
+          {
+            "name": "Unified flight-ops console",
+            "complexity": "high",
+            "description": "Real-time flight, crew, and aircraft state across hubs with audit trails."
+          },
+          {
+            "name": "Crew briefing distribution",
+            "complexity": "medium",
+            "description": "Replaces AeroBriefr — push notifications, read-receipts, role-targeted release."
+          },
+          {
+            "name": "Ground-handling intake",
+            "complexity": "medium",
+            "description": "Mobile-first ramp form replacing 3 paper-based + email flows."
+          },
+          {
+            "name": "Charter & cargo unified CRM",
+            "complexity": "medium",
+            "description": "Single contact graph across both lines of business with shared territory rules."
+          },
+          {
+            "name": "Compliance & incident reporting",
+            "complexity": "high",
+            "description": "FAA-aligned reporting with workflow automation and tamper-evident logs."
+          },
+          {
+            "name": "SSO + role-based access",
+            "complexity": "low",
+            "description": "Northwind IdP integration, MFA enforcement, scoped tokens for partners."
+          }
+        ],
+        "techStack": [
+          "Next.js 15 + React 19",
+          "PostgreSQL + Drizzle ORM",
+          "Cloudflare Workers (edge ingestion)",
+          "Resend + Twilio for crew notifications",
+          "Sentry + Grafana for observability"
+        ],
+        "team": "1 Partner + 2 Senior Engineers + 1 Designer + 1 Project Lead",
+        "timelineWeeks": 18,
+        "wordCount": 312
+      },
+      "financialComparison": {
+        "state": "complete",
+        "years": [
+          {
+            "year": 1,
+            "label": "Year 1",
+            "currentSpend": 4210400,
+            "ravnInvestment": 1740000,
+            "savings": 2470400,
+            "cumulativeSavings": 2470400
+          },
+          {
+            "year": 2,
+            "label": "Year 2",
+            "currentSpend": 4587336,
+            "ravnInvestment": 312000,
+            "savings": 4275336,
+            "cumulativeSavings": 6745736
+          },
+          {
+            "year": 3,
+            "label": "Year 3",
+            "currentSpend": 4953243,
+            "ravnInvestment": 324480,
+            "savings": 4628763,
+            "cumulativeSavings": 11374499
+          },
+          {
+            "year": 4,
+            "label": "Year 4",
+            "currentSpend": 5359502,
+            "ravnInvestment": 337459,
+            "savings": 5022043,
+            "cumulativeSavings": 16396542
+          },
+          {
+            "year": 5,
+            "label": "Year 5",
+            "currentSpend": 5780076,
+            "ravnInvestment": 350958,
+            "savings": 5429118,
+            "cumulativeSavings": 21825660
+          }
+        ],
+        "summary": {
+          "totalSaved5yr": 21825660,
+          "paybackMonths": 14,
+          "fiveYearRoiPct": 712,
+          "annualizedSavings": 4365132,
+          "baselineLabel": "Current SaaS spend",
+          "alternativeLabel": "Ravn alternative"
+        },
+        "notes": "Year-1 Ravn investment includes $1.48M one-time build and $260K maintenance. Years 2–5 escalate maintenance at 4% annually. Baseline assumes 8.5% CAGR per Northwind's 3-year SaaS price history.",
+        "wordCount": 142
+      },
+      "riskMitigation": {
+        "state": "complete",
+        "intro": "Every custom-build proposal needs a candid risk register. Below are the concerns we've heard from your team mapped to the controls we put in place from day one.",
+        "risks": [
+          {
+            "title": "Build slips past the 18-week timeline",
+            "severity": "medium",
+            "description": "Custom builds historically over-run by 30–40% in enterprise contexts.",
+            "mitigation": "Fixed-scope phases with shippable software at each gate. We trade scope, never quality, to hold the line."
+          },
+          {
+            "title": "Vendor lock-in inverted (Ravn becomes the new dependency)",
+            "severity": "medium",
+            "description": "Replacing 11 vendors with one builder concentrates risk on Ravn.",
+            "mitigation": "Source code escrow, weekly knowledge-transfer pairings with your engineers, exit clause grants Northwind production access at 30 days notice."
+          },
+          {
+            "title": "Migration disruption to flight ops",
+            "severity": "high",
+            "description": "Flight-day operations cannot tolerate a tooling outage.",
+            "mitigation": "Dual-run for 6 weeks: legacy tools stay paid until the new platform handles two consecutive 14-day reliability windows."
+          },
+          {
+            "title": "FAA / compliance posture changes",
+            "severity": "medium",
+            "description": "Regulatory shifts could force feature changes mid-build.",
+            "mitigation": "20% feature buffer in the schedule reserved for compliance-driven scope additions, no-charge."
+          },
+          {
+            "title": "Internal change-management push-back",
+            "severity": "low",
+            "description": "Power users have learned-helplessness around AeroBriefr and FlightStack.",
+            "mitigation": "Dedicated change-management workstream with 4 onsite training cohorts and a champion network across hubs."
+          }
+        ],
+        "wordCount": 264
+      },
+      "engagementOptions": {
+        "state": "complete",
+        "intro": "Three ways to start. We recommend the Full Build for the savings curve to begin in Year 1, but the Discovery Sprint is a low-risk way to validate the architecture and team fit before committing to the full engagement.",
+        "options": [
+          {
+            "id": "opt-discovery",
+            "name": "Discovery Sprint",
+            "bestFor": "Validating the architecture and team fit",
+            "monthlyPrice": 0,
+            "totalValue": 88000,
+            "durationLabel": "3 weeks · fixed",
+            "recommended": false,
+            "scope": [
+              "Architecture spike + 2 working prototypes",
+              "Power-user interviews with 12 stakeholders",
+              "Detailed scope + revised cost band",
+              "Right of first refusal on the full build"
+            ]
+          },
+          {
+            "id": "opt-full-build",
+            "name": "Full Build",
+            "bestFor": "Replacing the 11-tool stack on a fixed timeline",
+            "monthlyPrice": 0,
+            "totalValue": 1480000,
+            "durationLabel": "18 weeks · fixed price",
+            "recommended": true,
+            "scope": [
+              "Complete platform delivered in 3 phases (Discovery / Build / Hardening)",
+              "Source-code escrow + weekly KT with Northwind engineers",
+              "Dual-run for 6 weeks before legacy decommission",
+              "1 Partner + 2 Senior Engineers + Designer + PM",
+              "20% compliance buffer included"
+            ]
+          },
+          {
+            "id": "opt-build-run",
+            "name": "Build + Run",
+            "bestFor": "Outsourcing maintenance for the first 24 months",
+            "monthlyPrice": 32000,
+            "totalValue": 2248000,
+            "durationLabel": "18 weeks build + 24 months managed",
+            "recommended": false,
+            "scope": [
+              "Everything in Full Build",
+              "24 months of feature + reliability work",
+              "On-call rotation paired with Northwind oncall",
+              "Quarterly roadmap review with the Northwind exec team",
+              "Renewable at parity pricing or transition to in-house team"
+            ]
+          }
+        ],
+        "wordCount": 196
+      }
+    },
+    "viewEvents": [
+      {
+        "id": "evt-001",
+        "recipientId": "rcp-001",
+        "recipientLabel": "Daniel Okafor",
+        "occurredAt": "2026-05-06T13:42:00Z",
+        "relativeTime": "Just now",
+        "device": "desktop",
+        "dwellSeconds": 612,
+        "city": "Atlanta, GA",
+        "isFresh": true
+      },
+      {
+        "id": "evt-002",
+        "recipientId": "rcp-002",
+        "recipientLabel": "Sofía Gutiérrez",
+        "occurredAt": "2026-05-06T11:08:00Z",
+        "relativeTime": "2 hours ago",
+        "device": "mobile",
+        "dwellSeconds": 348,
+        "city": "Mexico City, MX",
+        "isFresh": false
+      },
+      {
+        "id": "evt-003",
+        "recipientId": "rcp-001",
+        "recipientLabel": "Daniel Okafor",
+        "occurredAt": "2026-05-06T08:54:00Z",
+        "relativeTime": "5 hours ago",
+        "device": "desktop",
+        "dwellSeconds": 901,
+        "city": "Atlanta, GA",
+        "isFresh": false
+      },
+      {
+        "id": "evt-004",
+        "recipientId": "rcp-003",
+        "recipientLabel": "Kenji Watanabe",
+        "occurredAt": "2026-05-05T17:03:00Z",
+        "relativeTime": "Yesterday, 5:03pm",
+        "device": "desktop",
+        "dwellSeconds": 232,
+        "city": "Singapore",
+        "isFresh": false
+      },
+      {
+        "id": "evt-005",
+        "recipientId": "rcp-002",
+        "recipientLabel": "Sofía Gutiérrez",
+        "occurredAt": "2026-05-05T13:48:00Z",
+        "relativeTime": "Yesterday, 1:48pm",
+        "device": "tablet",
+        "dwellSeconds": 412,
+        "city": "Mexico City, MX",
+        "isFresh": false
+      },
+      {
+        "id": "evt-006",
+        "recipientId": "rcp-001",
+        "recipientLabel": "Daniel Okafor",
+        "occurredAt": "2026-05-04T22:14:00Z",
+        "relativeTime": "2 days ago",
+        "device": "mobile",
+        "dwellSeconds": 88,
+        "city": "Atlanta, GA",
+        "isFresh": false
+      },
+      {
+        "id": "evt-007",
+        "recipientId": "rcp-004",
+        "recipientLabel": "Priya Raman",
+        "occurredAt": "2026-05-04T08:22:00Z",
+        "relativeTime": "2 days ago",
+        "device": "desktop",
+        "dwellSeconds": 521,
+        "city": "Bengaluru, IN",
+        "isFresh": false
+      },
+      {
+        "id": "evt-008",
+        "recipientId": null,
+        "recipientLabel": "Anonymous (forwarded link)",
+        "occurredAt": "2026-05-03T19:30:00Z",
+        "relativeTime": "3 days ago",
+        "device": "unknown",
+        "dwellSeconds": 64,
+        "city": null,
+        "isFresh": false
+      }
+    ]
+  }
+}

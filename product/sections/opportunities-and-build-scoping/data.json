@@ -1,0 +1,429 @@
+{
+  "_meta": {
+    "models": {
+      "opportunities": "Each entry is a SaaS application inside the active project that has been scored as a 'Rip Opportunity' — the candidate for a Ravn build replacement. Includes the 0–100 score, the six factor sub-scores that produced it, redundancy callouts grouping overlapping tools, and an AI-generated build scope (narrative, feature list, integrations, tech stack, team, cost, and timeline).",
+      "factors": "The six weighted inputs that combine into the Rip Score: Cost, Utilization, Feature Concentration, Pain, Replacement Tolerance, and Renewal Timing. Each carries its own weight; the weighted sum yields the headline score.",
+      "redundancyGroups": "A categorical grouping of overlapping SaaS tools inside the same project — e.g. Slack and Microsoft Teams both sitting in the Communication category. Surfaces cumulative redundant spend.",
+      "buildScope": "The AI-drafted plan for replacing this SaaS with a custom Ravn build. Includes narrative, complexity-tagged feature list, integrations grid, tech stack, team composition, USD cost range, and a week-by-week timeline."
+    },
+    "relationships": [
+      "Each Opportunity belongs to one Project (the project context is provided by the shell).",
+      "Each Opportunity has exactly six Factors that combine via weighted sum into the Rip Score.",
+      "Each Opportunity may sit inside zero or more RedundancyGroups when other apps in the same project share its category.",
+      "Each Opportunity optionally has one BuildScope — an opportunity without a build scope shows a 'Generate build scope' CTA.",
+      "BuildScope phases and milestones reference week numbers up to the BuildScope's totalWeeks."
+    ]
+  },
+  "projectContext": {
+    "id": "proj-cw-2026",
+    "company": "Cloudwell Logistics",
+    "industry": "Logistics & Supply Chain"
+  },
+  "opportunities": [
+    {
+      "id": "opp-sf-001",
+      "app": "Salesforce Sales Cloud",
+      "vendor": "Salesforce, Inc.",
+      "category": "CRM",
+      "annualSpend": 412000,
+      "annualWaste": 218000,
+      "seats": 320,
+      "daysToRenewal": 47,
+      "renewalDate": "2026-06-22",
+      "ripScore": 86,
+      "confidence": 84,
+      "tier": "hot",
+      "headline": "Strong rip candidate — high spend, low utilization, contract due in 47 days.",
+      "factors": [
+        {
+          "id": "cost",
+          "label": "Cost",
+          "subScore": 92,
+          "weight": 0.25,
+          "evidence": "$412K/yr at 320 seats — 2.1× the industry median per-seat for this segment.",
+          "inputs": [
+            "Annual contract value: $412,000",
+            "Per-seat cost: $1,287 / yr",
+            "Industry median per-seat: $612 / yr",
+            "5-year TCO at current trajectory: $2.4M"
+          ]
+        },
+        {
+          "id": "utilization",
+          "label": "Utilization",
+          "subScore": 88,
+          "weight": 0.25,
+          "evidence": "Only 142 of 320 licensed seats had a meaningful login in the last 30 days.",
+          "inputs": [
+            "Active seats (30d): 142 / 320 (44%)",
+            "Inactive paid seats: 178",
+            "Estimated inactive-seat waste: $229,000 / yr",
+            "Source: Tool Intake survey + admin export"
+          ]
+        },
+        {
+          "id": "feature-concentration",
+          "label": "Feature Concentration",
+          "subScore": 78,
+          "weight": 0.15,
+          "evidence": "Power users touch 6 of the 47 modules included in the contract tier.",
+          "inputs": [
+            "Modules in contract tier: 47",
+            "Modules used by ≥10% of active seats: 6",
+            "Most-used: Accounts, Contacts, Opportunities, Reports, Tasks, Email Sync",
+            "Unused premium tier add-ons: Einstein AI, CPQ, Field Service"
+          ]
+        },
+        {
+          "id": "pain",
+          "label": "Pain",
+          "subScore": 86,
+          "weight": 0.15,
+          "evidence": "5 of 8 power-user respondents flagged 'flow customization complexity' as a daily blocker.",
+          "inputs": [
+            "Pain mentions in Usage survey: 23",
+            "Recurring themes: customization complexity, slow page loads, admin bottleneck",
+            "Verbatim: 'Every change requires a ticket to our SF admin.' — VP RevOps",
+            "Verbatim: 'Reports are powerful but unreadable.' — Sales Manager"
+          ]
+        },
+        {
+          "id": "replacement-tolerance",
+          "label": "Replacement Tolerance",
+          "subScore": 74,
+          "weight": 0.1,
+          "evidence": "Champion identified inside RevOps; only Email Sync is considered hard-to-replace.",
+          "inputs": [
+            "Champion confirmed: Yes — VP RevOps",
+            "Hard-to-replace integrations: Outlook Email Sync",
+            "Switching-cost concern: Salesforce data export & retraining",
+            "Internal sentiment toward custom build: 6.8 / 10"
+          ]
+        },
+        {
+          "id": "renewal-timing",
+          "label": "Renewal Timing",
+          "subScore": 92,
+          "weight": 0.1,
+          "evidence": "Contract renews in 47 days — inside the 0–60 day decision window.",
+          "inputs": [
+            "Renewal date: 2026-06-22",
+            "Days remaining: 47",
+            "Auto-renewal clause: Yes (90 days notice already passed)",
+            "Procurement contact: Linda Chen, CFO Office"
+          ]
+        }
+      ],
+      "redundancy": [
+        {
+          "category": "CRM & Sales Engagement",
+          "summary": "Two CRMs are in the project — sales is on Salesforce while marketing-led pipelines live in HubSpot.",
+          "redundantSpend": 96000,
+          "siblings": [
+            { "app": "Salesforce Sales Cloud", "annualSpend": 412000, "isFocus": true },
+            { "app": "HubSpot Marketing Hub", "annualSpend": 96000, "isFocus": false }
+          ]
+        }
+      ],
+      "buildScope": {
+        "narrative": "A Ravn replacement for Cloudwell's Sales Cloud footprint focuses on the six modules that power 92% of actual day-to-day work: Accounts, Contacts, Opportunities, Reports, Tasks, and Email Sync. The build is a single-tenant React + Postgres workspace with a custom-fields engine, Outlook bidirectional sync, and a lightweight forecasting view replacing Einstein. By scoping out unused enterprise modules and the customization tax, projected 5-year TCO drops from $2.4M to $680K while restoring the admin bottleneck to a self-serve workflow.",
+        "features": [
+          { "id": "f-01", "title": "Accounts & Contacts workspace", "description": "Custom-field-driven master records with deduplication and merge-history.", "complexity": "standard" },
+          { "id": "f-02", "title": "Opportunity pipeline", "description": "Stage-based pipeline with weighted forecasting and configurable stages.", "complexity": "complex" },
+          { "id": "f-03", "title": "Outlook bidirectional sync", "description": "Two-way email + calendar sync with attribution to records.", "complexity": "hard" },
+          { "id": "f-04", "title": "Reports & saved views", "description": "Drag-and-drop report builder over an analytical Postgres schema.", "complexity": "complex" },
+          { "id": "f-05", "title": "Tasks & activity log", "description": "Per-record activity stream with reminders and assignment.", "complexity": "standard" },
+          { "id": "f-06", "title": "Custom fields engine", "description": "Admin-self-serve field creation with validation rules.", "complexity": "complex" },
+          { "id": "f-07", "title": "Permissions & roles", "description": "Hierarchical roles, field-level visibility, sharing rules.", "complexity": "complex" },
+          { "id": "f-08", "title": "Audit trail", "description": "Immutable history of every record change with diff view.", "complexity": "standard" },
+          { "id": "f-09", "title": "CSV import / bulk edit", "description": "Schema-aware bulk import with preview and rollback.", "complexity": "standard" },
+          { "id": "f-10", "title": "Webhook & API platform", "description": "Outbound webhooks and a documented REST API.", "complexity": "complex" },
+          { "id": "f-11", "title": "Forecasting view", "description": "Lightweight ML-assisted close-rate forecasts replacing Einstein.", "complexity": "hard" },
+          { "id": "f-12", "title": "SSO + SCIM", "description": "Okta SSO and SCIM provisioning to match enterprise IT policy.", "complexity": "standard" },
+          { "id": "f-13", "title": "Mobile companion", "description": "Read-mostly mobile UI for field reps logging activity.", "complexity": "standard" },
+          { "id": "f-14", "title": "Migration tooling", "description": "One-shot Salesforce export → import with field mapping UI.", "complexity": "trivial" }
+        ],
+        "integrations": [
+          { "id": "i-01", "name": "Outlook 365", "style": "oauth", "direction": "both" },
+          { "id": "i-02", "name": "HubSpot Marketing", "style": "rest", "direction": "in" },
+          { "id": "i-03", "name": "Slack", "style": "webhook", "direction": "out" },
+          { "id": "i-04", "name": "Stripe billing events", "style": "webhook", "direction": "in" },
+          { "id": "i-05", "name": "Okta SSO + SCIM", "style": "oauth", "direction": "both" },
+          { "id": "i-06", "name": "Snowflake reverse-ETL", "style": "rest", "direction": "out" }
+        ],
+        "techStack": {
+          "frontend": ["Next.js 15", "TypeScript", "Tailwind v4", "Tanstack Query"],
+          "backend": ["NestJS", "tRPC gateway", "Drizzle ORM"],
+          "data": ["Postgres 16", "Redis", "ClickHouse (reporting)"],
+          "infra": ["AWS (ECS Fargate)", "Terraform", "GitHub Actions", "Datadog"]
+        },
+        "team": [
+          { "role": "Tech lead", "count": 1, "weeks": 22, "cost": 88000 },
+          { "role": "Senior full-stack", "count": 2, "weeks": 22, "cost": 176000 },
+          { "role": "Frontend engineer", "count": 1, "weeks": 18, "cost": 72000 },
+          { "role": "Backend engineer", "count": 1, "weeks": 20, "cost": 80000 },
+          { "role": "Designer", "count": 1, "weeks": 10, "cost": 35000 },
+          { "role": "Product manager", "count": 1, "weeks": 22, "cost": 66000 }
+        ],
+        "costRange": { "low": 380000, "likely": 480000, "high": 620000 },
+        "totalWeeks": 22,
+        "phases": [
+          { "id": "p-01", "label": "Discovery & data shape", "kind": "discovery", "startWeek": 1, "endWeek": 3 },
+          { "id": "p-02", "label": "Core build", "kind": "build", "startWeek": 4, "endWeek": 16 },
+          { "id": "p-03", "label": "Hardening", "kind": "hardening", "startWeek": 17, "endWeek": 20 },
+          { "id": "p-04", "label": "Launch & migration", "kind": "launch", "startWeek": 21, "endWeek": 22 }
+        ],
+        "milestones": [
+          { "id": "m-01", "label": "Kickoff", "week": 1 },
+          { "id": "m-02", "label": "MVP demo", "week": 12 },
+          { "id": "m-03", "label": "Beta with sales team", "week": 17 },
+          { "id": "m-04", "label": "GA & cutover", "week": 22 }
+        ]
+      }
+    },
+    {
+      "id": "opp-zd-002",
+      "app": "Zendesk Suite",
+      "vendor": "Zendesk, Inc.",
+      "category": "Customer Support",
+      "annualSpend": 168000,
+      "annualWaste": 78000,
+      "seats": 90,
+      "daysToRenewal": 112,
+      "renewalDate": "2026-08-26",
+      "ripScore": 78,
+      "confidence": 79,
+      "tier": "hot",
+      "headline": "Hot — heavy macro reliance, 38% seat utilization, custom workflows already half-built outside Zendesk.",
+      "factors": [
+        { "id": "cost", "label": "Cost", "subScore": 81, "weight": 0.25, "evidence": "$168K/yr — Suite Professional tier with 90 paid agents.", "inputs": ["Per-agent cost: $1,866 / yr", "Currently on Suite Professional"] },
+        { "id": "utilization", "label": "Utilization", "subScore": 86, "weight": 0.25, "evidence": "Only 34 of 90 agents touched a ticket last week.", "inputs": ["Active agents (7d): 34 / 90 (38%)", "Idle paid seats: 56"] },
+        { "id": "feature-concentration", "label": "Feature Concentration", "subScore": 72, "weight": 0.15, "evidence": "8 macros handle 71% of tickets — the long tail of Suite features is unused.", "inputs": ["Tickets/macro coverage: 71%", "Macros relied on: 8"] },
+        { "id": "pain", "label": "Pain", "subScore": 84, "weight": 0.15, "evidence": "Support managers built a Notion-based escalation tracker because Zendesk SLAs are too coarse.", "inputs": ["Verbatim: 'We do half our work in Notion.' — Support Lead", "External tooling cost: $14K/yr"] },
+        { "id": "replacement-tolerance", "label": "Replacement Tolerance", "subScore": 68, "weight": 0.1, "evidence": "Macros and the help-center content can be migrated; Zendesk Talk integration is the sticky piece.", "inputs": ["Sticky: Talk (telephony)", "Champion: Director of Support"] },
+        { "id": "renewal-timing", "label": "Renewal Timing", "subScore": 60, "weight": 0.1, "evidence": "112 days out — inside the typical 90-day decision window soon.", "inputs": ["Renewal date: 2026-08-26"] }
+      ],
+      "redundancy": [
+        {
+          "category": "Customer Support",
+          "summary": "Zendesk owns ticketing but Notion + a Slack workflow are doing the work it was meant to do.",
+          "redundantSpend": 14000,
+          "siblings": [
+            { "app": "Zendesk Suite", "annualSpend": 168000, "isFocus": true },
+            { "app": "Notion (support workspace)", "annualSpend": 14000, "isFocus": false }
+          ]
+        }
+      ],
+      "buildScope": {
+        "narrative": "A Ravn-built support workspace consolidates ticketing, the Notion escalation tracker, and the Slack workflow into one surface. Macros become typed, parameterized response templates; SLAs are configurable per-customer instead of per-tier; help-center content is imported as-is. Zendesk Talk telephony is wired through a thin Twilio adapter rather than rebuilt.",
+        "features": [
+          { "id": "f-01", "title": "Ticket inbox", "description": "Multi-channel inbox across email, web form, and Slack.", "complexity": "complex" },
+          { "id": "f-02", "title": "Macros & response templates", "description": "Parameterized, typed macros with variable preview.", "complexity": "standard" },
+          { "id": "f-03", "title": "SLA engine", "description": "Per-customer SLA targets with breach alerts.", "complexity": "complex" },
+          { "id": "f-04", "title": "Escalation tracker", "description": "Replaces the Notion side-system with first-class escalations.", "complexity": "standard" },
+          { "id": "f-05", "title": "Help center", "description": "Public help-center site with article import from Zendesk.", "complexity": "standard" },
+          { "id": "f-06", "title": "Twilio Talk adapter", "description": "Telephony bridge replacing Zendesk Talk.", "complexity": "hard" },
+          { "id": "f-07", "title": "CSAT surveys", "description": "Post-resolution micro-survey embedded in email reply.", "complexity": "trivial" },
+          { "id": "f-08", "title": "Reporting dashboard", "description": "Volume, SLA, CSAT, and per-agent throughput.", "complexity": "standard" }
+        ],
+        "integrations": [
+          { "id": "i-01", "name": "Twilio Voice", "style": "rest", "direction": "both" },
+          { "id": "i-02", "name": "Slack escalations", "style": "webhook", "direction": "out" },
+          { "id": "i-03", "name": "Salesforce contacts", "style": "rest", "direction": "in" },
+          { "id": "i-04", "name": "Okta SSO", "style": "oauth", "direction": "both" }
+        ],
+        "techStack": {
+          "frontend": ["Next.js 15", "TypeScript", "Tailwind v4"],
+          "backend": ["NestJS", "Drizzle ORM"],
+          "data": ["Postgres 16", "Redis"],
+          "infra": ["AWS (ECS)", "Terraform", "Datadog"]
+        },
+        "team": [
+          { "role": "Tech lead", "count": 1, "weeks": 14, "cost": 56000 },
+          { "role": "Senior full-stack", "count": 1, "weeks": 14, "cost": 56000 },
+          { "role": "Backend engineer", "count": 1, "weeks": 12, "cost": 48000 },
+          { "role": "Designer", "count": 1, "weeks": 6, "cost": 21000 },
+          { "role": "Product manager", "count": 1, "weeks": 14, "cost": 42000 }
+        ],
+        "costRange": { "low": 195000, "likely": 245000, "high": 310000 },
+        "totalWeeks": 14,
+        "phases": [
+          { "id": "p-01", "label": "Discovery", "kind": "discovery", "startWeek": 1, "endWeek": 2 },
+          { "id": "p-02", "label": "Build", "kind": "build", "startWeek": 3, "endWeek": 11 },
+          { "id": "p-03", "label": "Hardening", "kind": "hardening", "startWeek": 12, "endWeek": 13 },
+          { "id": "p-04", "label": "Launch", "kind": "launch", "startWeek": 14, "endWeek": 14 }
+        ],
+        "milestones": [
+          { "id": "m-01", "label": "Kickoff", "week": 1 },
+          { "id": "m-02", "label": "Inbox MVP", "week": 8 },
+          { "id": "m-03", "label": "GA", "week": 14 }
+        ]
+      }
+    },
+    {
+      "id": "opp-cf-003",
+      "app": "Confluence Cloud",
+      "vendor": "Atlassian",
+      "category": "Knowledge Management",
+      "annualSpend": 84000,
+      "annualWaste": 31000,
+      "seats": 410,
+      "daysToRenewal": 198,
+      "renewalDate": "2026-11-20",
+      "ripScore": 64,
+      "confidence": 71,
+      "tier": "warm",
+      "headline": "Warm — broad seat sprawl, but Notion is already eating the active workspace usage.",
+      "factors": [
+        { "id": "cost", "label": "Cost", "subScore": 58, "weight": 0.25, "evidence": "$84K/yr at 410 seats — modest per-seat but seat sprawl is the issue.", "inputs": ["Per-seat: $205/yr", "Seats unused 30d: 240"] },
+        { "id": "utilization", "label": "Utilization", "subScore": 80, "weight": 0.25, "evidence": "170 of 410 seats opened a page in 30 days; 240 sit dormant.", "inputs": ["Active 30d: 170 / 410", "Dormant: 240"] },
+        { "id": "feature-concentration", "label": "Feature Concentration", "subScore": 64, "weight": 0.15, "evidence": "Wiki pages and meeting-notes templates account for almost all reads.", "inputs": ["Reads on wiki pages: 78%", "Reads on meeting notes: 14%"] },
+        { "id": "pain", "label": "Pain", "subScore": 56, "weight": 0.15, "evidence": "Search is the consistent complaint — answers exist but can't be found.", "inputs": ["Verbatim: 'Confluence search is unusable.' — Eng Manager"] },
+        { "id": "replacement-tolerance", "label": "Replacement Tolerance", "subScore": 70, "weight": 0.1, "evidence": "No deep platform integrations; moving content is the only friction.", "inputs": ["Integrations relied on: Jira issue links"] },
+        { "id": "renewal-timing", "label": "Renewal Timing", "subScore": 28, "weight": 0.1, "evidence": "Renewal sits 198 days out — outside the active decision window.", "inputs": ["Renewal date: 2026-11-20"] }
+      ],
+      "redundancy": [
+        {
+          "category": "Knowledge Management",
+          "summary": "Confluence is the system-of-record but day-to-day docs increasingly live in Notion.",
+          "redundantSpend": 22000,
+          "siblings": [
+            { "app": "Confluence Cloud", "annualSpend": 84000, "isFocus": true },
+            { "app": "Notion (general workspace)", "annualSpend": 22000, "isFocus": false }
+          ]
+        }
+      ],
+      "buildScope": {
+        "narrative": "A focused internal knowledge tool consolidates the Confluence wiki and Notion docs into a single workspace with first-class Jira issue linking. The build favors aggressive search (vector + keyword) and meeting-notes templates over Confluence's broad surface area.",
+        "features": [
+          { "id": "f-01", "title": "Page editor", "description": "Block-based editor with Jira issue embed.", "complexity": "complex" },
+          { "id": "f-02", "title": "Meeting notes templates", "description": "Recurring meeting templates with attendee + action items.", "complexity": "standard" },
+          { "id": "f-03", "title": "Hybrid search", "description": "Vector + keyword search across pages and attachments.", "complexity": "hard" },
+          { "id": "f-04", "title": "Spaces & permissions", "description": "Per-team spaces with inherited permissions.", "complexity": "standard" },
+          { "id": "f-05", "title": "Confluence importer", "description": "One-shot import preserving page tree.", "complexity": "standard" }
+        ],
+        "integrations": [
+          { "id": "i-01", "name": "Jira", "style": "rest", "direction": "both" },
+          { "id": "i-02", "name": "Slack", "style": "webhook", "direction": "out" },
+          { "id": "i-03", "name": "Okta SSO", "style": "oauth", "direction": "both" }
+        ],
+        "techStack": {
+          "frontend": ["Next.js 15", "Tailwind v4", "Tiptap"],
+          "backend": ["NestJS", "Drizzle ORM"],
+          "data": ["Postgres 16", "pgvector", "S3"],
+          "infra": ["AWS (ECS)", "Terraform"]
+        },
+        "team": [
+          { "role": "Tech lead", "count": 1, "weeks": 12, "cost": 48000 },
+          { "role": "Full-stack engineer", "count": 1, "weeks": 12, "cost": 42000 },
+          { "role": "Designer", "count": 1, "weeks": 5, "cost": 17500 }
+        ],
+        "costRange": { "low": 130000, "likely": 165000, "high": 210000 },
+        "totalWeeks": 12,
+        "phases": [
+          { "id": "p-01", "label": "Discovery", "kind": "discovery", "startWeek": 1, "endWeek": 2 },
+          { "id": "p-02", "label": "Build", "kind": "build", "startWeek": 3, "endWeek": 9 },
+          { "id": "p-03", "label": "Hardening", "kind": "hardening", "startWeek": 10, "endWeek": 11 },
+          { "id": "p-04", "label": "Launch", "kind": "launch", "startWeek": 12, "endWeek": 12 }
+        ],
+        "milestones": [
+          { "id": "m-01", "label": "Kickoff", "week": 1 },
+          { "id": "m-02", "label": "Editor MVP", "week": 7 },
+          { "id": "m-03", "label": "GA", "week": 12 }
+        ]
+      }
+    },
+    {
+      "id": "opp-sl-004",
+      "app": "Slack Business+",
+      "vendor": "Slack Technologies",
+      "category": "Communication",
+      "annualSpend": 138000,
+      "annualWaste": 24000,
+      "seats": 460,
+      "daysToRenewal": 73,
+      "renewalDate": "2026-07-18",
+      "ripScore": 58,
+      "confidence": 76,
+      "tier": "warm",
+      "headline": "Warm — high stickiness offsets the redundancy with Microsoft Teams; rip risk is moderate.",
+      "factors": [
+        { "id": "cost", "label": "Cost", "subScore": 64, "weight": 0.25, "evidence": "$138K/yr — Business+ tier with mostly-active 460 seats.", "inputs": ["Per-seat: $300/yr"] },
+        { "id": "utilization", "label": "Utilization", "subScore": 38, "weight": 0.25, "evidence": "Heavy daily-active usage — 410 of 460 seats post weekly.", "inputs": ["Weekly active: 410 / 460"] },
+        { "id": "feature-concentration", "label": "Feature Concentration", "subScore": 52, "weight": 0.15, "evidence": "Threads + huddles dominate; workflows used in 3 channels only.", "inputs": ["Threads: 71% of activity", "Workflows: 9%"] },
+        { "id": "pain", "label": "Pain", "subScore": 42, "weight": 0.15, "evidence": "Mild — search and notification noise come up but not as blockers.", "inputs": ["Pain mentions: 4"] },
+        { "id": "replacement-tolerance", "label": "Replacement Tolerance", "subScore": 30, "weight": 0.1, "evidence": "Deeply embedded in workflow; many third-party app integrations would have to be ported.", "inputs": ["Connected apps: 38", "Champion: not identified"] },
+        { "id": "renewal-timing", "label": "Renewal Timing", "subScore": 78, "weight": 0.1, "evidence": "73 days out — actionable but not urgent.", "inputs": ["Renewal date: 2026-07-18"] }
+      ],
+      "redundancy": [
+        {
+          "category": "Communication",
+          "summary": "Slack is the daily driver while Microsoft Teams sits idle from the M365 bundle — pure redundancy.",
+          "redundantSpend": 96000,
+          "siblings": [
+            { "app": "Slack Business+", "annualSpend": 138000, "isFocus": true },
+            { "app": "Microsoft Teams (M365 bundle)", "annualSpend": 96000, "isFocus": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opp-jr-005",
+      "app": "Jira Software",
+      "vendor": "Atlassian",
+      "category": "Project Management",
+      "annualSpend": 102000,
+      "annualWaste": 12000,
+      "seats": 220,
+      "daysToRenewal": 261,
+      "renewalDate": "2027-01-22",
+      "ripScore": 41,
+      "confidence": 68,
+      "tier": "lukewarm",
+      "headline": "Lukewarm — engineering relies on it daily; mostly a renegotiation candidate, not a rip.",
+      "factors": [
+        { "id": "cost", "label": "Cost", "subScore": 48, "weight": 0.25, "evidence": "$102K/yr at 220 seats — close to industry median.", "inputs": ["Per-seat: $464/yr"] },
+        { "id": "utilization", "label": "Utilization", "subScore": 22, "weight": 0.25, "evidence": "Engineering uses it daily — 198 of 220 seats active weekly.", "inputs": ["Weekly active: 198 / 220"] },
+        { "id": "feature-concentration", "label": "Feature Concentration", "subScore": 44, "weight": 0.15, "evidence": "Boards, sprints, and roadmap views are core; advanced automations are under-used.", "inputs": ["Boards used: 18", "Automations active: 6"] },
+        { "id": "pain", "label": "Pain", "subScore": 38, "weight": 0.15, "evidence": "Recurring complaints about the new pricing tier rather than the product itself.", "inputs": ["Pain mentions: pricing-related"] },
+        { "id": "replacement-tolerance", "label": "Replacement Tolerance", "subScore": 18, "weight": 0.1, "evidence": "Deep integration with the engineering toolchain — switching cost is high.", "inputs": ["Connected: GitHub, CI/CD, Confluence"] },
+        { "id": "renewal-timing", "label": "Renewal Timing", "subScore": 12, "weight": 0.1, "evidence": "Renewal is 261 days out — outside the active conversation window.", "inputs": ["Renewal date: 2027-01-22"] }
+      ],
+      "redundancy": []
+    },
+    {
+      "id": "opp-hb-006",
+      "app": "HubSpot Marketing Hub",
+      "vendor": "HubSpot, Inc.",
+      "category": "Marketing Automation",
+      "annualSpend": 96000,
+      "annualWaste": 8000,
+      "seats": 18,
+      "daysToRenewal": 154,
+      "renewalDate": "2026-10-07",
+      "ripScore": 28,
+      "confidence": 62,
+      "tier": "cold",
+      "headline": "Cold — small, sticky, and well-utilized — leave it alone for now.",
+      "factors": [
+        { "id": "cost", "label": "Cost", "subScore": 32, "weight": 0.25, "evidence": "$96K/yr at the Professional tier — marketing-specific seats only.", "inputs": ["Per-seat (paid marketers): 18"] },
+        { "id": "utilization", "label": "Utilization", "subScore": 14, "weight": 0.25, "evidence": "All 18 marketing seats are active weekly; the platform is fully used.", "inputs": ["Active 7d: 18 / 18"] },
+        { "id": "feature-concentration", "label": "Feature Concentration", "subScore": 36, "weight": 0.15, "evidence": "Email, landing pages, and workflows all see meaningful use.", "inputs": ["Modules used: 6 / 8"] },
+        { "id": "pain", "label": "Pain", "subScore": 24, "weight": 0.15, "evidence": "No active pain — marketing leadership is satisfied.", "inputs": ["Pain mentions: 0"] },
+        { "id": "replacement-tolerance", "label": "Replacement Tolerance", "subScore": 12, "weight": 0.1, "evidence": "Replacement appetite is near zero — purpose-built for the team's use case.", "inputs": ["Champion: none"] },
+        { "id": "renewal-timing", "label": "Renewal Timing", "subScore": 42, "weight": 0.1, "evidence": "154 days out — long lead time before this is actionable.", "inputs": ["Renewal date: 2026-10-07"] }
+      ],
+      "redundancy": [
+        {
+          "category": "CRM & Sales Engagement",
+          "summary": "Marketing-led pipelines created here overlap with Salesforce sales pipelines on the same accounts.",
+          "redundantSpend": 96000,
+          "siblings": [
+            { "app": "Salesforce Sales Cloud", "annualSpend": 412000, "isFocus": false },
+            { "app": "HubSpot Marketing Hub", "annualSpend": 96000, "isFocus": true }
+          ]
+        }
+      ]
+    }
+  ]
+}

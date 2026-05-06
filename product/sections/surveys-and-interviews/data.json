@@ -1,0 +1,487 @@
+{
+  "_meta": {
+    "models": {
+      "surveyTypes": "Each Survey Type is one of the three magic-link instruments — Tool Intake, Financial, Usage — scoped to this project. Carries response and completion counts, public-blast-link state, in-progress/overdue counters, and the timestamp of the last response activity. Drives the three top survey-type cards.",
+      "responses": "Each Response is one respondent's submission for one survey type. Captures status (in-progress / submitted / overdue / not-started), step progress for cross-device resume, channel (magic-link or public-link), and the latest activity. Drives the responses table.",
+      "respondents": "Each Respondent is a person at the prospect company invited to share input. Used to render the avatar + name + role pill on each table row, quote, and transcript.",
+      "quotes": "Each Quote is a verbatim answer a reviewer flagged as standout — pinned for re-use in proposals. Belongs to one response and one respondent.",
+      "transcripts": "Each Transcript is a follow-up call recording or paste uploaded against this project's respondents. Source, duration, and a status that walks uploaded → transcribing → ready → reviewed.",
+      "reviewers": "Internal Ravn users who pinned quotes — used for avatar lookup in the Standout Quotes panel."
+    },
+    "relationships": [
+      "Each Response belongs to one Respondent (respondentId) and references one Survey Type (surveyType).",
+      "Each Quote is tied to one Response (responseId) and one Respondent (respondentId), and was Pinned by one Reviewer (pinnedById).",
+      "Each Transcript references one Respondent (respondentId).",
+      "The three Survey Type Cards summarise responses across all Respondents in the project — counts roll up from the Responses array."
+    ]
+  },
+  "projectName": "Northwind Airlines",
+  "surveyTypes": [
+    {
+      "id": "tool-intake",
+      "label": "Tool Intake",
+      "description": "Which tools they use, who depends on them, and where the friction lives.",
+      "responseCount": 14,
+      "completedCount": 11,
+      "completionPercent": 79,
+      "lastResponseAt": "2026-05-06T11:42:00Z",
+      "publicLinkActive": true,
+      "publicLinkStarts": 14,
+      "inProgressCount": 2,
+      "overdueCount": 1
+    },
+    {
+      "id": "financial",
+      "label": "Financial",
+      "description": "Annual cost per tool, contract terms, billing cadence, renewal date.",
+      "responseCount": 6,
+      "completedCount": 4,
+      "completionPercent": 67,
+      "lastResponseAt": "2026-05-05T16:18:00Z",
+      "publicLinkActive": false,
+      "publicLinkStarts": 0,
+      "inProgressCount": 1,
+      "overdueCount": 1
+    },
+    {
+      "id": "usage",
+      "label": "Usage",
+      "description": "Per-seat utilisation, hours-per-week, feature touchpoints, replacement tolerance.",
+      "responseCount": 21,
+      "completedCount": 13,
+      "completionPercent": 62,
+      "lastResponseAt": "2026-05-06T13:05:00Z",
+      "publicLinkActive": true,
+      "publicLinkStarts": 38,
+      "inProgressCount": 5,
+      "overdueCount": 3
+    }
+  ],
+  "reviewers": [
+    { "id": "alex-morgan", "name": "Alex Morgan", "initials": "AM" },
+    { "id": "priya-shah", "name": "Priya Shah", "initials": "PS" },
+    { "id": "marcus-okafor", "name": "Marcus Okafor", "initials": "MO" }
+  ],
+  "respondents": [
+    {
+      "id": "resp-sasha-park",
+      "name": "Sasha Park",
+      "email": "sasha.park@northwind.aero",
+      "role": "Director of Engineering",
+      "initials": "SP"
+    },
+    {
+      "id": "resp-darnell-bishop",
+      "name": "Darnell Bishop",
+      "email": "darnell.b@northwind.aero",
+      "role": "VP Customer Operations",
+      "initials": "DB"
+    },
+    {
+      "id": "resp-iris-lindgren",
+      "name": "Iris Lindgren",
+      "email": "iris.l@northwind.aero",
+      "role": "FP&A Manager",
+      "initials": "IL"
+    },
+    {
+      "id": "resp-ben-okoye",
+      "name": "Ben Okoye",
+      "email": "ben.okoye@northwind.aero",
+      "role": "Senior SRE",
+      "initials": "BO"
+    },
+    {
+      "id": "resp-noor-rahimi",
+      "name": "Noor Rahimi",
+      "email": "noor.rahimi@northwind.aero",
+      "role": "Product Manager",
+      "initials": "NR"
+    },
+    {
+      "id": "resp-tomas-cabral",
+      "name": "Tomás Cabral",
+      "email": "tomas.cabral@northwind.aero",
+      "role": "Head of IT Procurement",
+      "initials": "TC"
+    },
+    {
+      "id": "resp-mei-watanabe",
+      "name": "Mei Watanabe",
+      "email": "mei.w@northwind.aero",
+      "role": "Customer Success Lead",
+      "initials": "MW"
+    },
+    {
+      "id": "resp-greg-hoffman",
+      "name": "Greg Hoffman",
+      "email": "greg.h@northwind.aero",
+      "role": "Field Operations Supervisor",
+      "initials": "GH"
+    },
+    {
+      "id": "resp-public-anon",
+      "name": "Anonymous (public link)",
+      "email": "—",
+      "role": "Unverified",
+      "initials": "??"
+    }
+  ],
+  "responses": [
+    {
+      "id": "rsp-001",
+      "respondentId": "resp-sasha-park",
+      "surveyType": "tool-intake",
+      "status": "submitted",
+      "currentStep": 7,
+      "totalSteps": 7,
+      "submittedAt": "2026-05-04T10:42:00Z",
+      "lastActivityAt": "2026-05-04T10:42:00Z",
+      "lastActivityLabel": "Submitted 7 of 7",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-002",
+      "respondentId": "resp-darnell-bishop",
+      "surveyType": "tool-intake",
+      "status": "submitted",
+      "currentStep": 7,
+      "totalSteps": 7,
+      "submittedAt": "2026-05-05T14:11:00Z",
+      "lastActivityAt": "2026-05-05T14:11:00Z",
+      "lastActivityLabel": "Submitted 7 of 7",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-003",
+      "respondentId": "resp-noor-rahimi",
+      "surveyType": "tool-intake",
+      "status": "in-progress",
+      "currentStep": 4,
+      "totalSteps": 7,
+      "submittedAt": null,
+      "lastActivityAt": "2026-05-06T11:42:00Z",
+      "lastActivityLabel": "Resumed on iPad — Section 4: Friction",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-004",
+      "respondentId": "resp-public-anon",
+      "surveyType": "tool-intake",
+      "status": "in-progress",
+      "currentStep": 2,
+      "totalSteps": 7,
+      "submittedAt": null,
+      "lastActivityAt": "2026-05-06T08:18:00Z",
+      "lastActivityLabel": "Started via Slack public link",
+      "channel": "public-link"
+    },
+    {
+      "id": "rsp-005",
+      "respondentId": "resp-greg-hoffman",
+      "surveyType": "tool-intake",
+      "status": "overdue",
+      "currentStep": 1,
+      "totalSteps": 7,
+      "submittedAt": null,
+      "lastActivityAt": "2026-04-26T19:00:00Z",
+      "lastActivityLabel": "Last reminder sent — no reply",
+      "channel": "magic-link",
+      "daysOverdue": 4
+    },
+    {
+      "id": "rsp-006",
+      "respondentId": "resp-tomas-cabral",
+      "surveyType": "financial",
+      "status": "submitted",
+      "currentStep": 5,
+      "totalSteps": 5,
+      "submittedAt": "2026-05-05T16:18:00Z",
+      "lastActivityAt": "2026-05-05T16:18:00Z",
+      "lastActivityLabel": "Contract PDFs attached for 8 tools",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-007",
+      "respondentId": "resp-iris-lindgren",
+      "surveyType": "financial",
+      "status": "submitted",
+      "currentStep": 5,
+      "totalSteps": 5,
+      "submittedAt": "2026-05-04T13:55:00Z",
+      "lastActivityAt": "2026-05-04T13:55:00Z",
+      "lastActivityLabel": "Submitted 5 of 5",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-008",
+      "respondentId": "resp-iris-lindgren",
+      "surveyType": "tool-intake",
+      "status": "submitted",
+      "currentStep": 7,
+      "totalSteps": 7,
+      "submittedAt": "2026-05-02T15:00:00Z",
+      "lastActivityAt": "2026-05-02T15:00:00Z",
+      "lastActivityLabel": "Submitted 7 of 7",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-009",
+      "respondentId": "resp-darnell-bishop",
+      "surveyType": "financial",
+      "status": "in-progress",
+      "currentStep": 2,
+      "totalSteps": 5,
+      "submittedAt": null,
+      "lastActivityAt": "2026-05-06T09:32:00Z",
+      "lastActivityLabel": "Drafted on Section 2: Annual cost",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-010",
+      "respondentId": "resp-tomas-cabral",
+      "surveyType": "financial",
+      "status": "overdue",
+      "currentStep": 0,
+      "totalSteps": 5,
+      "submittedAt": null,
+      "lastActivityAt": "2026-04-22T10:00:00Z",
+      "lastActivityLabel": "Invite delivered — never opened",
+      "channel": "magic-link",
+      "daysOverdue": 7
+    },
+    {
+      "id": "rsp-011",
+      "respondentId": "resp-ben-okoye",
+      "surveyType": "usage",
+      "status": "submitted",
+      "currentStep": 9,
+      "totalSteps": 9,
+      "submittedAt": "2026-05-03T18:22:00Z",
+      "lastActivityAt": "2026-05-03T18:22:00Z",
+      "lastActivityLabel": "Tagged Datadog & PagerDuty as 'critical-keep'",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-012",
+      "respondentId": "resp-mei-watanabe",
+      "surveyType": "usage",
+      "status": "submitted",
+      "currentStep": 9,
+      "totalSteps": 9,
+      "submittedAt": "2026-05-04T17:45:00Z",
+      "lastActivityAt": "2026-05-04T17:45:00Z",
+      "lastActivityLabel": "Submitted 9 of 9",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-013",
+      "respondentId": "resp-noor-rahimi",
+      "surveyType": "usage",
+      "status": "submitted",
+      "currentStep": 9,
+      "totalSteps": 9,
+      "submittedAt": "2026-05-05T11:00:00Z",
+      "lastActivityAt": "2026-05-05T11:00:00Z",
+      "lastActivityLabel": "Submitted 9 of 9",
+      "channel": "public-link"
+    },
+    {
+      "id": "rsp-014",
+      "respondentId": "resp-sasha-park",
+      "surveyType": "usage",
+      "status": "in-progress",
+      "currentStep": 6,
+      "totalSteps": 9,
+      "submittedAt": null,
+      "lastActivityAt": "2026-05-06T13:05:00Z",
+      "lastActivityLabel": "Resumed on phone — Section 6: Replacements",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-015",
+      "respondentId": "resp-greg-hoffman",
+      "surveyType": "usage",
+      "status": "in-progress",
+      "currentStep": 3,
+      "totalSteps": 9,
+      "submittedAt": null,
+      "lastActivityAt": "2026-05-04T07:12:00Z",
+      "lastActivityLabel": "Stuck on Section 3: weekly hours",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-016",
+      "respondentId": "resp-public-anon",
+      "surveyType": "usage",
+      "status": "in-progress",
+      "currentStep": 4,
+      "totalSteps": 9,
+      "submittedAt": null,
+      "lastActivityAt": "2026-05-06T12:48:00Z",
+      "lastActivityLabel": "3 anonymous starters via Slack today",
+      "channel": "public-link"
+    },
+    {
+      "id": "rsp-017",
+      "respondentId": "resp-mei-watanabe",
+      "surveyType": "tool-intake",
+      "status": "submitted",
+      "currentStep": 7,
+      "totalSteps": 7,
+      "submittedAt": "2026-04-30T16:01:00Z",
+      "lastActivityAt": "2026-04-30T16:01:00Z",
+      "lastActivityLabel": "Submitted 7 of 7",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-018",
+      "respondentId": "resp-tomas-cabral",
+      "surveyType": "usage",
+      "status": "overdue",
+      "currentStep": 0,
+      "totalSteps": 9,
+      "submittedAt": null,
+      "lastActivityAt": "2026-04-23T11:08:00Z",
+      "lastActivityLabel": "No engagement after 3 reminders",
+      "channel": "magic-link",
+      "daysOverdue": 6
+    },
+    {
+      "id": "rsp-019",
+      "respondentId": "resp-darnell-bishop",
+      "surveyType": "usage",
+      "status": "submitted",
+      "currentStep": 9,
+      "totalSteps": 9,
+      "submittedAt": "2026-04-29T10:30:00Z",
+      "lastActivityAt": "2026-04-29T10:30:00Z",
+      "lastActivityLabel": "Flagged Salesforce Service Cloud as 'rip & replace'",
+      "channel": "magic-link"
+    },
+    {
+      "id": "rsp-020",
+      "respondentId": "resp-ben-okoye",
+      "surveyType": "tool-intake",
+      "status": "submitted",
+      "currentStep": 7,
+      "totalSteps": 7,
+      "submittedAt": "2026-05-01T08:14:00Z",
+      "lastActivityAt": "2026-05-01T08:14:00Z",
+      "lastActivityLabel": "Submitted 7 of 7",
+      "channel": "magic-link"
+    }
+  ],
+  "quotes": [
+    {
+      "id": "q-001",
+      "responseId": "rsp-001",
+      "respondentId": "resp-sasha-park",
+      "surveyType": "tool-intake",
+      "questionLabel": "Q5 · The single biggest friction with Salesforce Service Cloud",
+      "text": "We pay for 600 seats and maybe 220 of them log in twice a week. The other 380 are basically expensive shelfware nobody has the political capital to revoke.",
+      "pinnedById": "alex-morgan",
+      "pinnedAt": "2026-05-04T11:30:00Z"
+    },
+    {
+      "id": "q-002",
+      "responseId": "rsp-019",
+      "respondentId": "resp-darnell-bishop",
+      "surveyType": "usage",
+      "questionLabel": "Q7 · If this tool disappeared tomorrow, what would break?",
+      "text": "Honestly? My team has built so many workarounds in spreadsheets that losing the tool would mostly mean we stop pretending it does the work for us.",
+      "pinnedById": "priya-shah",
+      "pinnedAt": "2026-04-29T15:42:00Z"
+    },
+    {
+      "id": "q-003",
+      "responseId": "rsp-011",
+      "respondentId": "resp-ben-okoye",
+      "surveyType": "usage",
+      "questionLabel": "Q3 · Hours per week spent reconciling tool data",
+      "text": "Three SREs spend roughly four hours a week each just reconciling alerts between Datadog, PagerDuty and Slack. That's a part-time engineer paying for the privilege of not trusting our tools.",
+      "pinnedById": "alex-morgan",
+      "pinnedAt": "2026-05-03T19:10:00Z"
+    },
+    {
+      "id": "q-004",
+      "responseId": "rsp-007",
+      "respondentId": "resp-iris-lindgren",
+      "surveyType": "financial",
+      "questionLabel": "Q2 · Annual cost per platform — surprises?",
+      "text": "When I pulled the 2025 numbers I realised we'd been auto-renewing a $480k contract for two years on a platform whose original sponsor left in 2023.",
+      "pinnedById": "marcus-okafor",
+      "pinnedAt": "2026-05-04T16:00:00Z"
+    },
+    {
+      "id": "q-005",
+      "responseId": "rsp-013",
+      "respondentId": "resp-noor-rahimi",
+      "surveyType": "usage",
+      "questionLabel": "Q9 · Replacement tolerance for the top three tools",
+      "text": "Tool A — could replace tomorrow. Tool B — would need a 3-month parallel run. Tool C — ripping it out kills our SOC2 evidence chain, so handle with care.",
+      "pinnedById": "priya-shah",
+      "pinnedAt": "2026-05-05T12:18:00Z"
+    }
+  ],
+  "transcripts": [
+    {
+      "id": "tr-001",
+      "title": "Sasha Park — Engineering deep-dive",
+      "respondentId": "resp-sasha-park",
+      "source": "zoom",
+      "durationSeconds": 2940,
+      "status": "reviewed",
+      "uploadedAt": "2026-05-04T17:20:00Z",
+      "teaser": "We're paying $4.8M a year for tools we can't even reliably get a seat-utilisation report out of."
+    },
+    {
+      "id": "tr-002",
+      "title": "Darnell Bishop — Service Cloud frustration call",
+      "respondentId": "resp-darnell-bishop",
+      "source": "granola",
+      "durationSeconds": 1820,
+      "status": "ready",
+      "uploadedAt": "2026-05-05T15:50:00Z",
+      "teaser": "Three of his five team leads have asked, in writing, to be moved off Service Cloud by end of year."
+    },
+    {
+      "id": "tr-003",
+      "title": "Iris Lindgren — Financial walkthrough",
+      "respondentId": "resp-iris-lindgren",
+      "source": "zoom",
+      "durationSeconds": 3540,
+      "status": "transcribing",
+      "uploadedAt": "2026-05-06T09:05:00Z"
+    },
+    {
+      "id": "tr-004",
+      "title": "Ben Okoye — SRE tool overlap notes",
+      "respondentId": "resp-ben-okoye",
+      "source": "paste",
+      "durationSeconds": 0,
+      "status": "ready",
+      "uploadedAt": "2026-05-03T20:00:00Z",
+      "teaser": "Pasted a 1,200-word memo with six concrete redundancies between Datadog and Splunk."
+    },
+    {
+      "id": "tr-005",
+      "title": "Mei Watanabe — CS workflow audit",
+      "respondentId": "resp-mei-watanabe",
+      "source": "upload",
+      "durationSeconds": 2160,
+      "status": "uploaded",
+      "uploadedAt": "2026-05-06T13:48:00Z"
+    },
+    {
+      "id": "tr-006",
+      "title": "Noor Rahimi — Product roadmap implications",
+      "respondentId": "resp-noor-rahimi",
+      "source": "granola",
+      "durationSeconds": 2700,
+      "status": "ready",
+      "uploadedAt": "2026-05-05T11:32:00Z",
+      "teaser": "Two of next quarter's roadmap items are explicitly blocked by the current Salesforce config."
+    }
+  ]
+}

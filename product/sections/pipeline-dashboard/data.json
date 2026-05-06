@@ -1,0 +1,510 @@
+{
+  "_meta": {
+    "models": {
+      "stats": "The four headline KPIs across the top of the dashboard — prospect count, total SaaS spend currently being analyzed, count of qualified Rip opportunities, and total engagement value in the active pipeline. Each carries a 30-day delta and a 12-point sparkline.",
+      "projects": "Each Project is a prospect company in the pipeline. Carries owner, current pipeline stage, heat tier, captured SaaS spend, blended Rip score, next-upcoming renewal, and a last-activity timestamp. Drives the prospect list table.",
+      "opportunities": "Each Opportunity is a Rip Opportunity in the pipeline at a specific stage. Belongs to one Project. Drives the kanban board — cards group by stage and roll up by engagement value per column.",
+      "renewals": "Each Renewal is an upcoming SaaS contract end date for one project's SaasApplication, bucketed by days-until-renewal into the four urgency bands shown on the renewal calendar.",
+      "owners": "Internal Ravn users who own projects — used to render avatar initials and the owner filter dropdown."
+    },
+    "relationships": [
+      "Each Project is owned by one Owner (ownerEmail).",
+      "Each Project has one Pipeline Stage and one Heat Tier (the row badges).",
+      "Each Opportunity belongs to one Project (projectId) and lives in exactly one Pipeline Stage column on the kanban.",
+      "Each Renewal belongs to one Project (projectId) and references a single SaaS application by name.",
+      "The Stats summary is computed across all Projects + Opportunities — the dashboard rolls them up at the top."
+    ]
+  },
+  "stats": [
+    {
+      "id": "prospects",
+      "label": "Active prospects",
+      "value": 47,
+      "format": "number",
+      "sublabel": "8 added this month",
+      "delta": 12.5,
+      "deltaLabel": "vs. last 30d",
+      "sparkline": [32, 34, 33, 36, 38, 37, 41, 42, 44, 45, 46, 47]
+    },
+    {
+      "id": "spend-analyzed",
+      "label": "SaaS spend analyzed",
+      "value": 184250000,
+      "format": "currency",
+      "sublabel": "Across 412 contracts captured",
+      "delta": 8.2,
+      "deltaLabel": "vs. last 30d",
+      "sparkline": [142, 148, 151, 156, 159, 163, 168, 172, 175, 178, 181, 184]
+    },
+    {
+      "id": "opportunities",
+      "label": "Qualified opportunities",
+      "value": 28,
+      "format": "number",
+      "sublabel": "11 hot · 9 warm · 8 lukewarm",
+      "delta": 16.7,
+      "deltaLabel": "vs. last 30d",
+      "sparkline": [18, 19, 19, 21, 22, 22, 24, 25, 25, 27, 27, 28]
+    },
+    {
+      "id": "engagement-value",
+      "label": "Pipeline engagement value",
+      "value": 21470000,
+      "format": "currency",
+      "sublabel": "Weighted to stage probability",
+      "delta": -3.4,
+      "deltaLabel": "vs. last 30d",
+      "sparkline": [19, 20, 21, 22, 22, 23, 22, 22, 22, 21, 21, 21]
+    }
+  ],
+  "owners": [
+    {
+      "id": "alex-morgan",
+      "name": "Alex Morgan",
+      "email": "alex.morgan@ravn.co",
+      "initials": "AM"
+    },
+    {
+      "id": "priya-shah",
+      "name": "Priya Shah",
+      "email": "priya.shah@ravn.co",
+      "initials": "PS"
+    },
+    {
+      "id": "marcus-okafor",
+      "name": "Marcus Okafor",
+      "email": "marcus.okafor@ravn.co",
+      "initials": "MO"
+    },
+    {
+      "id": "jules-tanaka",
+      "name": "Jules Tanaka",
+      "email": "jules.tanaka@ravn.co",
+      "initials": "JT"
+    },
+    {
+      "id": "rosa-delacruz",
+      "name": "Rosa de la Cruz",
+      "email": "rosa.delacruz@ravn.co",
+      "initials": "RC"
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-northwind",
+      "company": "Northwind Airlines",
+      "industry": "Aviation",
+      "ownerId": "alex-morgan",
+      "stage": "viewed",
+      "heat": "hot",
+      "annualSpend": 4830000,
+      "ripScore": 87,
+      "nextRenewalDate": "2026-06-12",
+      "nextRenewalApp": "Salesforce Service Cloud",
+      "lastActivityAt": "2026-05-06T13:42:00Z",
+      "lastActivityLabel": "Marcus opened proposal for the 14th time"
+    },
+    {
+      "id": "proj-meridian",
+      "company": "Meridian Health",
+      "industry": "Healthcare",
+      "ownerId": "priya-shah",
+      "stage": "sent",
+      "heat": "hot",
+      "annualSpend": 2940000,
+      "ripScore": 81,
+      "nextRenewalDate": "2026-05-29",
+      "nextRenewalApp": "GitHub Enterprise",
+      "lastActivityAt": "2026-05-05T09:11:00Z",
+      "lastActivityLabel": "Proposal viewed by 3 stakeholders"
+    },
+    {
+      "id": "proj-atlas",
+      "company": "Atlas Logistics",
+      "industry": "Supply chain",
+      "ownerId": "marcus-okafor",
+      "stage": "proposal-generated",
+      "heat": "warm",
+      "annualSpend": 3210000,
+      "ripScore": 74,
+      "nextRenewalDate": "2026-08-04",
+      "nextRenewalApp": "Samsara Fleet",
+      "lastActivityAt": "2026-05-04T17:08:00Z",
+      "lastActivityLabel": "BuildScope generated for Samsara replacement"
+    },
+    {
+      "id": "proj-lumen",
+      "company": "Lumen Capital",
+      "industry": "Financial services",
+      "ownerId": "jules-tanaka",
+      "stage": "identified",
+      "heat": "warm",
+      "annualSpend": 1680000,
+      "ripScore": 68,
+      "nextRenewalDate": "2026-07-15",
+      "nextRenewalApp": "Slack Enterprise",
+      "lastActivityAt": "2026-05-03T11:22:00Z",
+      "lastActivityLabel": "Tool intake survey 60% complete"
+    },
+    {
+      "id": "proj-helio",
+      "company": "Helio Foods",
+      "industry": "CPG / Food",
+      "ownerId": "rosa-delacruz",
+      "stage": "meeting-scheduled",
+      "heat": "hot",
+      "annualSpend": 5440000,
+      "ripScore": 92,
+      "nextRenewalDate": "2026-05-19",
+      "nextRenewalApp": "ServiceMax",
+      "lastActivityAt": "2026-04-29T20:15:00Z",
+      "lastActivityLabel": "Discovery call confirmed for May 19"
+    },
+    {
+      "id": "proj-cobalt",
+      "company": "Cobalt Energy",
+      "industry": "Energy / Utilities",
+      "ownerId": "alex-morgan",
+      "stage": "identified",
+      "heat": "lukewarm",
+      "annualSpend": 2150000,
+      "ripScore": 54,
+      "nextRenewalDate": "2026-09-22",
+      "nextRenewalApp": "Workiva",
+      "lastActivityAt": "2026-04-26T08:45:00Z",
+      "lastActivityLabel": "CSV portfolio imported · 24 apps"
+    },
+    {
+      "id": "proj-aurora",
+      "company": "Aurora Robotics",
+      "industry": "Industrial / Robotics",
+      "ownerId": "priya-shah",
+      "stage": "proposal-generated",
+      "heat": "warm",
+      "annualSpend": 1290000,
+      "ripScore": 71,
+      "nextRenewalDate": "2026-06-30",
+      "nextRenewalApp": "Jira Premium",
+      "lastActivityAt": "2026-04-24T14:38:00Z",
+      "lastActivityLabel": "Financial survey submitted"
+    },
+    {
+      "id": "proj-vantage",
+      "company": "Vantage Outdoor",
+      "industry": "Retail / DTC",
+      "ownerId": "marcus-okafor",
+      "stage": "viewed",
+      "heat": "warm",
+      "annualSpend": 870000,
+      "ripScore": 66,
+      "nextRenewalDate": "2026-05-12",
+      "nextRenewalApp": "Klaviyo",
+      "lastActivityAt": "2026-04-22T10:04:00Z",
+      "lastActivityLabel": "Proposal opened from email"
+    },
+    {
+      "id": "proj-koda",
+      "company": "Koda Telecom",
+      "industry": "Telecom",
+      "ownerId": "jules-tanaka",
+      "stage": "sent",
+      "heat": "lukewarm",
+      "annualSpend": 6210000,
+      "ripScore": 49,
+      "nextRenewalDate": "2026-10-08",
+      "nextRenewalApp": "Genesys Cloud",
+      "lastActivityAt": "2026-04-20T16:50:00Z",
+      "lastActivityLabel": "Reminder sent to Sandra (CFO)"
+    },
+    {
+      "id": "proj-fjord",
+      "company": "Fjord Studios",
+      "industry": "Media / Creative",
+      "ownerId": "rosa-delacruz",
+      "stage": "identified",
+      "heat": "cold",
+      "annualSpend": 410000,
+      "ripScore": 31,
+      "nextRenewalDate": "2026-11-30",
+      "nextRenewalApp": "Adobe Creative Cloud",
+      "lastActivityAt": "2026-04-15T13:11:00Z",
+      "lastActivityLabel": "Intake form abandoned at step 2"
+    },
+    {
+      "id": "proj-summit",
+      "company": "Summit Insurance",
+      "industry": "Insurance",
+      "ownerId": "alex-morgan",
+      "stage": "meeting-scheduled",
+      "heat": "hot",
+      "annualSpend": 7320000,
+      "ripScore": 84,
+      "nextRenewalDate": "2026-05-08",
+      "nextRenewalApp": "Guidewire ClaimCenter",
+      "lastActivityAt": "2026-05-06T08:30:00Z",
+      "lastActivityLabel": "C-suite meeting locked for May 8"
+    },
+    {
+      "id": "proj-orbital",
+      "company": "Orbital Manufacturing",
+      "industry": "Manufacturing",
+      "ownerId": "marcus-okafor",
+      "stage": "proposal-generated",
+      "heat": "warm",
+      "annualSpend": 2780000,
+      "ripScore": 73,
+      "nextRenewalDate": "2026-07-02",
+      "nextRenewalApp": "Plex ERP",
+      "lastActivityAt": "2026-05-01T19:06:00Z",
+      "lastActivityLabel": "Build scope finalised — 38-week plan"
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "opp-001",
+      "projectId": "proj-northwind",
+      "company": "Northwind Airlines",
+      "ownerId": "alex-morgan",
+      "saasApp": "Salesforce Service Cloud",
+      "stage": "viewed",
+      "engagementValue": 1480000,
+      "ripScore": 87,
+      "daysInStage": 4,
+      "tier": "hot"
+    },
+    {
+      "id": "opp-002",
+      "projectId": "proj-vantage",
+      "company": "Vantage Outdoor",
+      "ownerId": "marcus-okafor",
+      "saasApp": "Klaviyo",
+      "stage": "viewed",
+      "engagementValue": 380000,
+      "ripScore": 66,
+      "daysInStage": 9,
+      "tier": "warm"
+    },
+    {
+      "id": "opp-003",
+      "projectId": "proj-meridian",
+      "company": "Meridian Health",
+      "ownerId": "priya-shah",
+      "saasApp": "GitHub Enterprise",
+      "stage": "sent",
+      "engagementValue": 920000,
+      "ripScore": 81,
+      "daysInStage": 6,
+      "tier": "hot"
+    },
+    {
+      "id": "opp-004",
+      "projectId": "proj-koda",
+      "company": "Koda Telecom",
+      "ownerId": "jules-tanaka",
+      "saasApp": "Genesys Cloud",
+      "stage": "sent",
+      "engagementValue": 1820000,
+      "ripScore": 49,
+      "daysInStage": 18,
+      "tier": "lukewarm"
+    },
+    {
+      "id": "opp-005",
+      "projectId": "proj-atlas",
+      "company": "Atlas Logistics",
+      "ownerId": "marcus-okafor",
+      "saasApp": "Samsara Fleet",
+      "stage": "proposal-generated",
+      "engagementValue": 1240000,
+      "ripScore": 74,
+      "daysInStage": 3,
+      "tier": "warm"
+    },
+    {
+      "id": "opp-006",
+      "projectId": "proj-aurora",
+      "company": "Aurora Robotics",
+      "ownerId": "priya-shah",
+      "saasApp": "Jira Premium",
+      "stage": "proposal-generated",
+      "engagementValue": 540000,
+      "ripScore": 71,
+      "daysInStage": 7,
+      "tier": "warm"
+    },
+    {
+      "id": "opp-007",
+      "projectId": "proj-orbital",
+      "company": "Orbital Manufacturing",
+      "ownerId": "marcus-okafor",
+      "saasApp": "Plex ERP",
+      "stage": "proposal-generated",
+      "engagementValue": 980000,
+      "ripScore": 73,
+      "daysInStage": 1,
+      "tier": "warm"
+    },
+    {
+      "id": "opp-008",
+      "projectId": "proj-lumen",
+      "company": "Lumen Capital",
+      "ownerId": "jules-tanaka",
+      "saasApp": "Slack Enterprise",
+      "stage": "identified",
+      "engagementValue": 680000,
+      "ripScore": 68,
+      "daysInStage": 12,
+      "tier": "warm"
+    },
+    {
+      "id": "opp-009",
+      "projectId": "proj-cobalt",
+      "company": "Cobalt Energy",
+      "ownerId": "alex-morgan",
+      "saasApp": "Workiva",
+      "stage": "identified",
+      "engagementValue": 410000,
+      "ripScore": 54,
+      "daysInStage": 15,
+      "tier": "lukewarm"
+    },
+    {
+      "id": "opp-010",
+      "projectId": "proj-fjord",
+      "company": "Fjord Studios",
+      "ownerId": "rosa-delacruz",
+      "saasApp": "Adobe Creative Cloud",
+      "stage": "identified",
+      "engagementValue": 180000,
+      "ripScore": 31,
+      "daysInStage": 22,
+      "tier": "cold"
+    },
+    {
+      "id": "opp-011",
+      "projectId": "proj-helio",
+      "company": "Helio Foods",
+      "ownerId": "rosa-delacruz",
+      "saasApp": "ServiceMax",
+      "stage": "meeting-scheduled",
+      "engagementValue": 2150000,
+      "ripScore": 92,
+      "daysInStage": 2,
+      "tier": "hot"
+    },
+    {
+      "id": "opp-012",
+      "projectId": "proj-summit",
+      "company": "Summit Insurance",
+      "ownerId": "alex-morgan",
+      "saasApp": "Guidewire ClaimCenter",
+      "stage": "meeting-scheduled",
+      "engagementValue": 3120000,
+      "ripScore": 84,
+      "daysInStage": 0,
+      "tier": "hot"
+    }
+  ],
+  "renewals": [
+    {
+      "id": "ren-001",
+      "projectId": "proj-summit",
+      "company": "Summit Insurance",
+      "saasApp": "Guidewire ClaimCenter",
+      "ownerId": "alex-morgan",
+      "annualValue": 1840000,
+      "renewalDate": "2026-05-08",
+      "daysUntil": 2
+    },
+    {
+      "id": "ren-002",
+      "projectId": "proj-vantage",
+      "company": "Vantage Outdoor",
+      "saasApp": "Klaviyo",
+      "ownerId": "marcus-okafor",
+      "annualValue": 240000,
+      "renewalDate": "2026-05-12",
+      "daysUntil": 6
+    },
+    {
+      "id": "ren-003",
+      "projectId": "proj-helio",
+      "company": "Helio Foods",
+      "saasApp": "ServiceMax",
+      "ownerId": "rosa-delacruz",
+      "annualValue": 980000,
+      "renewalDate": "2026-05-19",
+      "daysUntil": 13
+    },
+    {
+      "id": "ren-004",
+      "projectId": "proj-meridian",
+      "company": "Meridian Health",
+      "saasApp": "GitHub Enterprise",
+      "ownerId": "priya-shah",
+      "annualValue": 460000,
+      "renewalDate": "2026-05-29",
+      "daysUntil": 23
+    },
+    {
+      "id": "ren-005",
+      "projectId": "proj-northwind",
+      "company": "Northwind Airlines",
+      "saasApp": "Salesforce Service Cloud",
+      "ownerId": "alex-morgan",
+      "annualValue": 1620000,
+      "renewalDate": "2026-06-12",
+      "daysUntil": 37
+    },
+    {
+      "id": "ren-006",
+      "projectId": "proj-aurora",
+      "company": "Aurora Robotics",
+      "saasApp": "Jira Premium",
+      "ownerId": "priya-shah",
+      "annualValue": 285000,
+      "renewalDate": "2026-06-30",
+      "daysUntil": 55
+    },
+    {
+      "id": "ren-007",
+      "projectId": "proj-orbital",
+      "company": "Orbital Manufacturing",
+      "saasApp": "Plex ERP",
+      "ownerId": "marcus-okafor",
+      "annualValue": 740000,
+      "renewalDate": "2026-07-02",
+      "daysUntil": 57
+    },
+    {
+      "id": "ren-008",
+      "projectId": "proj-lumen",
+      "company": "Lumen Capital",
+      "saasApp": "Slack Enterprise",
+      "ownerId": "jules-tanaka",
+      "annualValue": 380000,
+      "renewalDate": "2026-07-15",
+      "daysUntil": 70
+    },
+    {
+      "id": "ren-009",
+      "projectId": "proj-atlas",
+      "company": "Atlas Logistics",
+      "saasApp": "Samsara Fleet",
+      "ownerId": "marcus-okafor",
+      "annualValue": 920000,
+      "renewalDate": "2026-08-04",
+      "daysUntil": 90
+    },
+    {
+      "id": "ren-010",
+      "projectId": "proj-pacific",
+      "company": "Pacific Biotech",
+      "saasApp": "Veeva Vault",
+      "ownerId": "priya-shah",
+      "annualValue": 1180000,
+      "renewalDate": "2026-04-22",
+      "daysUntil": -14
+    }
+  ]
+}
